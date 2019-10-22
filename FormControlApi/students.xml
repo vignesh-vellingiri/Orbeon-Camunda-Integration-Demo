@@ -1,0 +1,8 @@
+<form xmlns:fr="http://orbeon.org/oxf/xml/form-runner" fr:data-format-version="4.0.0">
+<section-1>
+<control-1>vv1</control-1>
+<control-2>000999</control-2>
+<control-3>test form 1</control-3>
+<control-4>no comments</control-4>
+</section-1>
+</form>
