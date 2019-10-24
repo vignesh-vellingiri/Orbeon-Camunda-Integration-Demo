@@ -2,6 +2,7 @@ package com.aot.forms.formApi;
 
 import java.io.File;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,9 @@ import com.aot.forms.model.RecordXml;
 import com.aot.forms.model.form;
 import java.util.UUID;
 
+import com.aot.forms.security.KeycloakExtension;
+
+
 @RestController
 @Configuration
 //@ComponentScan(basePackages = "com.aot.forms.model.*")
@@ -32,10 +37,27 @@ public class FormsController {
 	@Autowired
 	private OrbeonMetaDataRepository orbeonMetaDataRepository;
 	
+	KeycloakExtension ke = new KeycloakExtension();
+	CamundaServices cs = new CamundaServices();
+	
+	
     @RequestMapping("/healthCheck")
     public String greeting() {
         return "OK";
     }
+    
+    @RequestMapping("/secure/healthCheck")
+    public String greeting1() {
+    	//cs.getTask();
+        //return ke.getUserGroup();
+        return "OK";
+    }
+
+	/*
+	 * @PreAuthorize("hasAnyAuthority('ROLE_USER')") public
+	 * ResponseEntity<Set<String>> getAuthorizedUserRoles() { return
+	 * ResponseEntity.ok(SecurityContextUtils.getUserRoles()); }
+	 */
     
     @RequestMapping(value = "/records", 
     		method = RequestMethod.GET, 
@@ -65,4 +87,13 @@ public class FormsController {
         orbeonMetaDataRepository.save(omd);
         return "Ok";
     }
+    
+	/*
+	 * @RequestMapping("/camunda/process/instance") public String processInstance()
+	 * {
+	 * 
+	 * return ke.getUserGroup(); }
+	 */
+
+    
 }
