@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aot.forms.config.SecurityContextUtils;
 import com.aot.forms.formApi.CamundaServices;
 import com.aot.forms.formApi.OrbeonMetaData;
 import com.aot.forms.formApi.OrbeonMetaDataRepository;
@@ -31,19 +32,21 @@ public class FormsController {
 	@Autowired
 	private CamundaServices camundaServices;
 	
+	@Autowired
+	private SecurityContextUtils securityContextUtils;
 	
 	@GetMapping(path = "/healthCheck")
     public String greeting() {
         return "OK";
     }
 	
-	@GetMapping(path = "/secure/healthCheck" )
+	@GetMapping(path = "/secure/tasks" )
     @PreAuthorize("hasAnyAuthority('ROLE_role0')")
     public String greeting1() {
     	try {
     		
     		String resp = camundaServices.getTasks();
-    		System.out.println("-------- Tasks :  " + resp);
+    		System.out.println("-------- Tasks :  " + securityContextUtils.getGroups());
     		return resp;
     	}
     	catch(Exception e) {
@@ -52,11 +55,6 @@ public class FormsController {
         return "OK";
     }
 
-	/*
-	 * @PreAuthorize("hasAnyAuthority('ROLE_USER')") public
-	 * ResponseEntity<Set<String>> getAuthorizedUserRoles() { return
-	 * ResponseEntity.ok(SecurityContextUtils.getUserRoles()); }
-	 */
     
     @RequestMapping(value = "/records", 
     		method = RequestMethod.GET, 

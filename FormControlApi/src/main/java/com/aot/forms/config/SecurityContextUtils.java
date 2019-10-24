@@ -10,13 +10,19 @@
 package com.aot.forms.config;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.jwt.Jwt;
+import org.springframework.security.jwt.JwtHelper;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 /**
@@ -66,4 +72,20 @@ public class SecurityContextUtils {
     }
     return roles;
   }
+  
+  public static String getGroups() {
+		try {
+			SecurityContext securityContext = SecurityContextHolder.getContext();
+			OAuth2AuthenticationDetails oad = (OAuth2AuthenticationDetails) securityContext.getAuthentication().getDetails();
+			ObjectMapper objectMapper = new ObjectMapper();
+			
+			Jwt jwt = JwtHelper.decode(oad.getTokenValue());
+			Map<String, Object> claims = objectMapper.readValue(jwt.getClaims(), Map.class);
+			return claims.get("group").toString();
+		}
+		catch(Exception e) {
+			e.printStackTrace(); 
+		}
+		return null;
+	}
 }
