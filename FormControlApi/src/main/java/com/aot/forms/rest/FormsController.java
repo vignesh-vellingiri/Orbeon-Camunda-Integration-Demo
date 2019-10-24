@@ -1,56 +1,55 @@
-package com.aot.forms.formApi;
+package com.aot.forms.rest;
 
-import java.io.File;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.Document;
 
-import com.aot.forms.model.Record;
+import com.aot.forms.config.JwtAccessTokenCustomizer;
+import com.aot.forms.formApi.OrbeonMetaData;
+import com.aot.forms.formApi.OrbeonMetaDataRepository;
 import com.aot.forms.model.RecordXml;
 import com.aot.forms.model.form;
-import java.util.UUID;
-
-import com.aot.forms.security.KeycloakExtension;
 
 
 @RestController
-@Configuration
-//@ComponentScan(basePackages = "com.aot.forms.model.*")
+@RequestMapping("/api/v1/forms")
 public class FormsController {
 	
 	@Autowired
 	private OrbeonMetaDataRepository orbeonMetaDataRepository;
 	
-	KeycloakExtension ke = new KeycloakExtension();
-	CamundaServices cs = new CamundaServices();
+	//KeycloakExtension ke = new KeycloakExtension();
+	//CamundaServices cs = new CamundaServices();
 	
-	
-    @RequestMapping("/healthCheck")
+	@GetMapping(path = "/healthCheck")
     public String greeting() {
         return "OK";
     }
-    
-    @RequestMapping("/secure/healthCheck")
+	
+	@GetMapping(path = "/secure/healthCheck" )
+    @PreAuthorize("hasAnyAuthority('ROLE_role0')")
     public String greeting1() {
-    	cs.getTask();
-        return ke.getUserGroup();
-       // return "OK";
+    	//cs.getTask();
+       // return ke.getUserGroup();
+		SecurityContext securityContext = SecurityContextHolder.getContext();
+		OAuth2AuthenticationDetails oad = (OAuth2AuthenticationDetails) securityContext.getAuthentication().getDetails();
+		JwtAccessTokenCustomizer jtc = new JwtAccessTokenCustomizer();
+		//jtc.extractRoles(oad.getTokenValue());
+		System.out.println("-------- details: " + oad.getTokenValue());
+        return "OK";
     }
 
 	/*

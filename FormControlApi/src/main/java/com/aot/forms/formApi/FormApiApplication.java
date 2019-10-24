@@ -1,18 +1,21 @@
 package com.aot.forms.formApi;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import com.aot.forms.repository.OrbeonMetaDataRepository;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+import org.springframework.context.annotation.Import;
 
-@SpringBootApplication
-@Configuration
-@EnableAutoConfiguration
+import com.aot.forms.config.JwtAccessTokenCustomizer;
+import com.aot.forms.config.OAuth2RestTemplateConfigurer;
+import com.aot.forms.config.SecurityConfigurer;
+import com.aot.forms.config.SecurityContextUtils;
+import com.aot.forms.config.SecurityProperties;
+import com.aot.forms.rest.FormsController;
+
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class,
+        UserDetailsServiceAutoConfiguration.class})
+@Import({SecurityProperties.class,JwtAccessTokenCustomizer.class , OAuth2RestTemplateConfigurer.class ,SecurityConfigurer.class, SecurityContextUtils.class, FormsController.class})
 public class FormApiApplication {
 
 	public static void main(String[] args) {

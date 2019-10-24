@@ -1,10 +1,5 @@
 package com.aot.forms.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-
 public class Record {
 	private String recordId;
 	private String applicationType;
