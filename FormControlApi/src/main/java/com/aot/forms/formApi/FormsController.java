@@ -37,8 +37,8 @@ public class FormsController {
 	@Autowired
 	private OrbeonMetaDataRepository orbeonMetaDataRepository;
 	
-	KeycloakExtension ke = new KeycloakExtension();
-	CamundaServices cs = new CamundaServices();
+	//KeycloakExtension ke = new KeycloakExtension();
+	//CamundaServices cs = new CamundaServices();
 	
 	
     @RequestMapping("/healthCheck")

@@ -13,10 +13,6 @@ import com.aot.forms.repository.OrbeonMetaDataRepository;
 @SpringBootApplication
 @Configuration
 @EnableAutoConfiguration
-//@EnableJpaAuditing
-//@EntityScan("com.aot.forms.model")
-//@ComponentScan//(basePackages =  {"com.aot.forms"})//({"com.aot.forms.repository.*","com.aot.forms.formApi.FormsController","com.aot.forms.model.*"})
-//@EnableJpaRepositories("com.aot.forms.repository.OrbeonMetaDataRepository")
 public class FormApiApplication {
 
 	public static void main(String[] args) {
