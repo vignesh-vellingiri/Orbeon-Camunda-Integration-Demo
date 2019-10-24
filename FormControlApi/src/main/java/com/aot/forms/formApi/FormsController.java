@@ -37,8 +37,8 @@ public class FormsController {
 	@Autowired
 	private OrbeonMetaDataRepository orbeonMetaDataRepository;
 	
-	//KeycloakExtension ke = new KeycloakExtension();
-	//CamundaServices cs = new CamundaServices();
+	KeycloakExtension ke = new KeycloakExtension();
+	CamundaServices cs = new CamundaServices();
 	
 	
     @RequestMapping("/healthCheck")
@@ -48,9 +48,9 @@ public class FormsController {
     
     @RequestMapping("/secure/healthCheck")
     public String greeting1() {
-    	//cs.getTask();
-        //return ke.getUserGroup();
-        return "OK";
+    	cs.getTask();
+        return ke.getUserGroup();
+       // return "OK";
     }
 
 	/*
