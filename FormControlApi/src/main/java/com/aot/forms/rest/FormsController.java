@@ -6,9 +6,6 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aot.forms.config.JwtAccessTokenCustomizer;
+import com.aot.forms.formApi.CamundaServices;
 import com.aot.forms.formApi.OrbeonMetaData;
 import com.aot.forms.formApi.OrbeonMetaDataRepository;
 import com.aot.forms.model.RecordXml;
@@ -31,8 +28,9 @@ public class FormsController {
 	@Autowired
 	private OrbeonMetaDataRepository orbeonMetaDataRepository;
 	
-	//KeycloakExtension ke = new KeycloakExtension();
-	//CamundaServices cs = new CamundaServices();
+	@Autowired
+	private CamundaServices camundaServices;
+	
 	
 	@GetMapping(path = "/healthCheck")
     public String greeting() {
@@ -42,13 +40,15 @@ public class FormsController {
 	@GetMapping(path = "/secure/healthCheck" )
     @PreAuthorize("hasAnyAuthority('ROLE_role0')")
     public String greeting1() {
-    	//cs.getTask();
-       // return ke.getUserGroup();
-		SecurityContext securityContext = SecurityContextHolder.getContext();
-		OAuth2AuthenticationDetails oad = (OAuth2AuthenticationDetails) securityContext.getAuthentication().getDetails();
-		JwtAccessTokenCustomizer jtc = new JwtAccessTokenCustomizer();
-		//jtc.extractRoles(oad.getTokenValue());
-		System.out.println("-------- details: " + oad.getTokenValue());
+    	try {
+    		
+    		String resp = camundaServices.getTasks();
+    		System.out.println("-------- Tasks :  " + resp);
+    		return resp;
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
         return "OK";
     }
 
@@ -87,12 +87,6 @@ public class FormsController {
         return "Ok";
     }
     
-	/*
-	 * @RequestMapping("/camunda/process/instance") public String processInstance()
-	 * {
-	 * 
-	 * return ke.getUserGroup(); }
-	 */
-
+	
     
 }
