@@ -1,5 +1,7 @@
 package com.aot.forms.rest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,6 +20,7 @@ import com.aot.forms.config.SecurityContextUtils;
 import com.aot.forms.formApi.CamundaServices;
 import com.aot.forms.formApi.OrbeonMetaData;
 import com.aot.forms.formApi.OrbeonMetaDataRepository;
+import com.aot.forms.model.CamundaTaskResp;
 import com.aot.forms.model.RecordXml;
 import com.aot.forms.model.form;
 
@@ -40,19 +43,22 @@ public class FormsController {
         return "OK";
     }
 	
-	@GetMapping(path = "/secure/tasks" )
+	@GetMapping(path = "/camunda/tasks" , produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyAuthority('ROLE_role0')")
-    public String greeting1() {
+    public CamundaTaskResp[] greeting1() {
     	try {
     		
-    		String resp = camundaServices.getTasks();
-    		System.out.println("-------- Tasks :  " + securityContextUtils.getGroups());
+    		List<String> groupList = securityContextUtils.getGroups();
+    		CamundaTaskResp[] resp = camundaServices.getTasks(groupList);
+    		if(resp == null || resp.length == 0) {
+        		System.out.println("Empty response");
+    		}
     		return resp;
     	}
     	catch(Exception e) {
     		e.printStackTrace();
     	}
-        return "OK";
+        return null;
     }
 
     
@@ -67,12 +73,14 @@ public class FormsController {
         return frm;
     }
     
+    /*
     @PostMapping(value = "/metadata")
     public String updateMetadata(@RequestBody  RecordXml RecordXml) {
     	System.out.println("appType:");
         System.out.println("appType:" + RecordXml );
         return "Ok";
     }
+    */
     
     @PostMapping(value = "/dummy")
      public String createDummy(@RequestBody  Map<String, Object> RecordXml, @RequestParam Map<String, String> reqParam) {

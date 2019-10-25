@@ -9,6 +9,7 @@
  */
 package com.aot.forms.config;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -73,7 +74,7 @@ public class SecurityContextUtils {
     return roles;
   }
   
-  public static String getGroups() {
+  public static ArrayList getGroups() {
 		try {
 			SecurityContext securityContext = SecurityContextHolder.getContext();
 			OAuth2AuthenticationDetails oad = (OAuth2AuthenticationDetails) securityContext.getAuthentication().getDetails();
@@ -81,7 +82,8 @@ public class SecurityContextUtils {
 			
 			Jwt jwt = JwtHelper.decode(oad.getTokenValue());
 			Map<String, Object> claims = objectMapper.readValue(jwt.getClaims(), Map.class);
-			return claims.get("group").toString();
+			ArrayList groupList =  (ArrayList) claims.get("group");
+			return groupList;
 		}
 		catch(Exception e) {
 			e.printStackTrace(); 
