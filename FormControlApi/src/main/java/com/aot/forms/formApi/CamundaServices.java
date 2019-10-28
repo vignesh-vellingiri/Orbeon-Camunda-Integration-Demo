@@ -9,6 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -32,6 +33,10 @@ import com.aot.forms.rest.RestTemplateResponseErrorHandler;
 public class CamundaServices {
 	@Autowired
     private OAuth2RestTemplate oAuth2RestTemplate;
+	
+	@Autowired
+	private OrbeonMetaDataRepository orbeonMetaDataRepository;
+	
 	private int timeout = 5000;
 	
 	private CamundaTaskResp[] camundaTaskReq;
@@ -122,7 +127,7 @@ public class CamundaServices {
     	
     }
     
-    public String startProcessDefinition(HashMap<String, String> variableHM, String processDefinitionKey) {
+    public String startProcessDefinition(HashMap<String, String> variableHM, String processDefinitionKey, OrbeonMetaData omd) {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
     	JSONObject variableJsonObject = new JSONObject();
@@ -130,6 +135,7 @@ public class CamundaServices {
     	JSONObject variableListJsonObject = new JSONObject();
     	JSONObject tempObject = new JSONObject();
     	String StartProcessDefinitionUrl ;
+    	String processInstanceId = "";
     	configureRestTemplate();
     	try {
     		for (Map.Entry mapElement : variableHM.entrySet()) {
@@ -148,8 +154,15 @@ public class CamundaServices {
     			return "process DefinitionKey can't be empty.";
     		
     		ResponseEntity<String> response  = oAuth2RestTemplate.postForEntity(StartProcessDefinitionUrl, request, String.class);
+    		JSONObject json = new JSONObject(response.getBody());
+    		processInstanceId = (String) json.get("id");
+    		OrbeonMetaData metadata;
+    		if(omd != null) {
+    			omd.setCamunda_id(processInstanceId);
+    			orbeonMetaDataRepository.save(omd);
+    		}
     		
-	    	
+	    System.out.print("----------------" + response.getBody());
     	}
     	catch(RestTemplateException rte) {
     		return rte.getError();

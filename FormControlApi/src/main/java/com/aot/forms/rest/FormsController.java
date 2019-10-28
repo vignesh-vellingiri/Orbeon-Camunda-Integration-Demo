@@ -2,8 +2,10 @@ package com.aot.forms.rest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -105,9 +107,9 @@ public class FormsController {
 		
 		String actionId = reqParam.get("actionId");
 		if(actionId.equals("START_INSTANCE")) {
-			OrbeonMetaData omd = new OrbeonMetaData(reqParam.get("document"),reqParam.get("app"),reqParam.get("docid"));
+			OrbeonMetaData omd = new OrbeonMetaData(reqParam.get("document"),reqParam.get("app"),reqParam.get("docid"),"","","NEW","","","");
 			orbeonMetaDataRepository.save(omd);
-			camundaServices.startProcessDefinition(null,null);
+			camundaServices.startProcessDefinition(null,null,null);
 			return new ResponseEntity<>("SAVE_METADATA", HttpStatus.OK);
 			//return "SAVE_METADATA OK";
 		}
@@ -122,7 +124,7 @@ public class FormsController {
 			}
 			else {
 				LOGGER.debug("Claim request Successful for taskId : " + taskId + " and user : " + securityContextUtils.getUserName());
-				return new ResponseEntity<>("CLAIM_TASK OK", HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<>("CLAIM_TASK OK", HttpStatus.OK);
 				//return "CLAIM_TASK OK";
 			}
 		}
@@ -146,11 +148,11 @@ public class FormsController {
     
     
     /*
-     * SAVE_METADATA - Save metadata saves the metadata and creates a process instance in Camunda.
+     * SAVE_METADATA - Save metadata saves the metadata and creates a process instance in Camunda using predefined XML Structure.
      * 
      */
-    @PostMapping(value = "/unsecure/action", consumes = MediaType.APPLICATION_XML_VALUE)
-     public ResponseEntity<String> createDummy(@RequestBody  FormControlAction formControlAction, @RequestParam Map<String, String> reqParam) {
+    @PostMapping(value = "/plain/action", consumes = MediaType.APPLICATION_XML_VALUE)
+     public ResponseEntity<String> unsecureAction(@RequestBody  FormControlAction formControlAction, @RequestParam Map<String, String> reqParam) {
     	reqParam.forEach((key, value) -> System.out.println(key + ":" + value));
     	HashMap<String, String> varMap = new HashMap<String, String>();
     	
@@ -161,10 +163,58 @@ public class FormsController {
 		String actionId = reqParam.get("actionId");
 		String processDefinitionKey = reqParam.get("processDefinitionKey");
     	if(actionId.equals("START_INSTANCE")) {
-			OrbeonMetaData omd = new OrbeonMetaData(reqParam.get("document"),reqParam.get("app"),reqParam.get("docid"));
+			OrbeonMetaData omd = new OrbeonMetaData(reqParam.get("document"),reqParam.get("app"),reqParam.get("docid"),"","","NEW","","","");
 			orbeonMetaDataRepository.save(omd);
-			camundaServices.startProcessDefinition(varMap,processDefinitionKey);
+			camundaServices.startProcessDefinition(varMap,processDefinitionKey,null);
 			return new ResponseEntity<>("SAVE_METADATA", HttpStatus.OK);
+			
+		}
+    	
+    	return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+    
+    
+    /*
+     * SAVE_METADATA - Save metadata saves the metadata and creates a process instance in Camunda using form XML data received from Orbeon.
+     * 
+     */
+    @PostMapping(value = "/unsecure/action", consumes = MediaType.APPLICATION_XML_VALUE)
+     public ResponseEntity<String> createDummy(@RequestBody  Map<String, Object> RecordXml, @RequestParam Map<String, String> reqParam) {
+    	HashMap<String, String> varMap = new HashMap<String, String>();
+    	String processDefinitionKey = "" ;
+    	String userName = "" ;
+    	
+    	LOGGER.debug("Query parameters received:");
+    	for (Map.Entry<String,String> entry : reqParam.entrySet()) { 
+    		LOGGER.debug(entry.getKey() + ":" + entry.getValue());
+    		if(entry.getKey().matches("document"))
+    			varMap.put(entry.getKey(), entry.getValue());	
+
+    	}
+    	
+    	/* Section name hardcoded to section 1 
+ 			also field in the form is expected to have a column groupName */
+    	Map<String,String> allData = (Map) RecordXml.get("section-1");
+    	LOGGER.debug("XML Input from forms for section-1 ");
+    	for (Map.Entry<String,String> entry : allData.entrySet()) { 
+            LOGGER.debug("Key = " + entry.getKey() + 
+                             ", Value = " + entry.getValue());
+            if(entry.getKey().matches("groupName"))
+            	varMap.put(entry.getKey(), entry.getValue());
+            if(entry.getKey().matches("processDefinitionKey"))
+    			processDefinitionKey = entry.getValue();
+            if(entry.getKey().matches("userName"))
+            	userName = entry.getValue();
+    	}
+    	
+    	
+		String actionId = reqParam.get("actionId");
+		
+    	if(actionId.equals("START_INSTANCE")) {
+			OrbeonMetaData omd = new OrbeonMetaData(reqParam.get("document"),userName,"","","NEW","","","","");
+			orbeonMetaDataRepository.save(omd);
+			camundaServices.startProcessDefinition(varMap,processDefinitionKey,  omd  );
+			return new ResponseEntity<>("START_INSTANCE OK", HttpStatus.OK);
 			
 		}
     	
