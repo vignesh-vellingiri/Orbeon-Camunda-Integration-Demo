@@ -163,7 +163,7 @@ public class FormsController {
     	if(actionId.equals("START_INSTANCE")) {
 			OrbeonMetaData omd = new OrbeonMetaData(reqParam.get("document"),reqParam.get("app"),reqParam.get("docid"));
 			orbeonMetaDataRepository.save(omd);
-			//camundaServices.startProcessDefinition(varMap,processDefinitionKey);
+			camundaServices.startProcessDefinition(varMap,processDefinitionKey);
 			return new ResponseEntity<>("SAVE_METADATA", HttpStatus.OK);
 			
 		}
