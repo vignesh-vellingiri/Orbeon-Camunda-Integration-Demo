@@ -182,6 +182,7 @@ public class FormsController {
      public ResponseEntity<String> createDummy(@RequestBody  Map<String, Object> RecordXml, @RequestParam Map<String, String> reqParam) {
     	HashMap<String, String> varMap = new HashMap<String, String>();
     	String processDefinitionKey = "" ;
+    	String processInstanceId = "";
     	String userName = "" ;
     	
     	LOGGER.debug("Query parameters received:");
@@ -189,6 +190,8 @@ public class FormsController {
     		LOGGER.debug(entry.getKey() + ":" + entry.getValue());
     		if(entry.getKey().matches("document"))
     			varMap.put(entry.getKey(), entry.getValue());	
+    		if(entry.getKey().matches("processInstanceId"))
+    			processInstanceId = entry.getValue();	
 
     	}
     	
@@ -196,16 +199,17 @@ public class FormsController {
  			also field in the form is expected to have a column groupName */
     	Map<String,String> allData = (Map) RecordXml.get("section-1");
     	LOGGER.debug("XML Input from forms for section-1 ");
-    	for (Map.Entry<String,String> entry : allData.entrySet()) { 
-            LOGGER.debug("Key = " + entry.getKey() + 
-                             ", Value = " + entry.getValue());
-            if(entry.getKey().matches("groupName"))
-            	varMap.put(entry.getKey(), entry.getValue());
-            if(entry.getKey().matches("processDefinitionKey"))
-    			processDefinitionKey = entry.getValue();
-            if(entry.getKey().matches("userName"))
-            	userName = entry.getValue();
-    	}
+    	if(allData != null) 
+	    	for (Map.Entry<String,String> entry : allData.entrySet()) { 
+	            LOGGER.debug("Key = " + entry.getKey() + 
+	                             ", Value = " + entry.getValue());
+	            if(entry.getKey().matches("groupName"))
+	            	varMap.put(entry.getKey(), entry.getValue());
+	            if(entry.getKey().matches("processDefinitionKey"))
+	    			processDefinitionKey = entry.getValue();
+	            if(entry.getKey().matches("userName"))
+	            	userName = entry.getValue();
+	    	}
     	
     	
 		String actionId = reqParam.get("actionId");
@@ -215,6 +219,13 @@ public class FormsController {
 			orbeonMetaDataRepository.save(omd);
 			camundaServices.startProcessDefinition(varMap,processDefinitionKey,  omd  );
 			return new ResponseEntity<>("START_INSTANCE OK", HttpStatus.OK);
+			
+		}
+    	else if(actionId.equals("END_INSTANCE")) {
+			OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(processInstanceId);
+			omd.setStatus("COMPLETE");
+			orbeonMetaDataRepository.save(omd);
+			return new ResponseEntity<>("END_INSTANCE OK", HttpStatus.OK);
 			
 		}
     	
