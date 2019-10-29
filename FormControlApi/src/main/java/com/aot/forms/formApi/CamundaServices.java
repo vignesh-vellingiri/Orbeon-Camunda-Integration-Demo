@@ -27,6 +27,7 @@ import com.aot.forms.exception.RestTemplateException;
 import com.aot.forms.model.CamundaTaskResp;
 import com.aot.forms.rest.RequestResponseLoggingInterceptor;
 import com.aot.forms.rest.RestTemplateResponseErrorHandler;
+import com.aot.forms.repository.OrbeonMetaDataRepository;
 
 @Component
 @Import({CamundaTaskResp.class})
@@ -102,6 +103,7 @@ public class CamundaServices {
     	headers.setContentType(MediaType.APPLICATION_JSON);
     	JSONObject taskJsonObject = new JSONObject();
     	String claimTaskUrl ;
+    	String processInstanceId;
     	configureRestTemplate();
     	try {
     		taskJsonObject.put("userId", user);
@@ -110,10 +112,15 @@ public class CamundaServices {
     			claimTaskUrl = CAMUNDA_BASE_URL + "/task/" + taskId + "/claim";
     		else 
     			return "Task Id or User can't be empty. Check TaskId or authentication.";
-    		
     		ResponseEntity<String> response  = oAuth2RestTemplate.postForEntity(claimTaskUrl, request, String.class);
     		
-	    	
+    		response  = oAuth2RestTemplate.getForEntity(claimTaskUrl.replace("/claim", ""), String.class);
+    		JSONObject json = new JSONObject(response.getBody());
+    		processInstanceId = (String) json.get("executionId");
+    		OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(processInstanceId);
+	    	omd.setStatus("IN-PROGRESS");
+	    	orbeonMetaDataRepository.save(omd);
+    		System.out.println("dummy");
     	}
     	catch(RestTemplateException rte) {
     		return rte.getError();
@@ -160,9 +167,11 @@ public class CamundaServices {
     		if(omd != null) {
     			omd.setCamunda_id(processInstanceId);
     			orbeonMetaDataRepository.save(omd);
+    			
+//    			List<OrbeonMetaData> omdlist = orbeonMetaDataRepository.findByCamundaId("4a52b923-f9db-11e9-b242-3cf0114a5415");
     		}
     		
-	    System.out.print("----------------" + response.getBody());
+
     	}
     	catch(RestTemplateException rte) {
     		return rte.getError();

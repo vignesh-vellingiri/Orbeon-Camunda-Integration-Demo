@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aot.forms.config.SecurityContextUtils;
 import com.aot.forms.formApi.CamundaServices;
 import com.aot.forms.formApi.OrbeonMetaData;
-import com.aot.forms.formApi.OrbeonMetaDataRepository;
+import com.aot.forms.repository.OrbeonMetaDataRepository;
 import com.aot.forms.model.CamundaTaskResp;
 import com.aot.forms.model.FormControlAction;
 import com.aot.forms.model.RecordXml;
