@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Built-By: vignesh vellingiri
+Start-Class: org.aot.camunda.bpm.demo.DemoApplication
+Spring-Boot-Classes: BOOT-INF/classes/
+Spring-Boot-Lib: BOOT-INF/lib/
+Spring-Boot-Version: 2.2.0.RELEASE
+Created-By: Apache Maven 3.6.2
+Build-Jdk: 1.8.0_221
+Main-Class: org.springframework.boot.loader.PropertiesLauncher
+

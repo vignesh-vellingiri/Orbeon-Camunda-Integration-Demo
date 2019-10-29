@@ -1,0 +1,62 @@
+#jdbc:postgresql://localhost:5432/camunda
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/camunda
+  username: postgres
+  password: postgres
+  driver-class-name : org.postgresql.Driver
+#spring.h2.console.enabled: true
+camunda.bpm.database.type: postgres
+
+
+spring:
+  jersey:
+    application-path: engine-rest
+
+
+logging:
+  level:
+    root: INFO
+camunda.bpm:
+  admin-user:
+    id: admin
+    password: admin
+    firstName: vignesh
+  history-level: audit
+  authorization:
+    enabled: true
+  #filter:
+    #create: All tasks
+
+server:
+  port: 9092
+  servlet.context-path: /camunda
+
+keycloak.url.client: ${KEYCLOAK_URL_CLIENT:http://localhost:9000}
+keycloak.url.token: ${KEYCLOAK_URL_TOKEN:http://localhost:9000}
+keycloak.url.plugin: ${KEYCLOAK_URL_PLUGIN:https://localhost:9001}
+
+security:
+  oauth2:
+    client:
+      client-id: camunda
+      client-secret: 3950c1f0-9a9e-4d59-ad91-abb007f1c35a
+      accessTokenUri: ${keycloak.url.token}/auth/realms/orbeonRealm/protocol/openid-connect/token
+      userAuthorizationUri: ${keycloak.url.client}/auth/realms/orbeonRealm/protocol/openid-connect/auth
+      scope: openid profile email
+    resource:
+      userInfoUri: ${keycloak.url.client}/auth/realms/orbeonRealm/protocol/openid-connect/userinfo
+
+logging.level.org.springframework.security: DEBUG
+
+plugin.identity.keycloak:
+  keycloakIssuerUrl: ${keycloak.url.plugin}/auth/realms/orbeonRealm
+  keycloakAdminUrl: ${keycloak.url.plugin}/auth/admin/realms/orbeonRealm
+  clientId: camunda
+  clientSecret: 3950c1f0-9a9e-4d59-ad91-abb007f1c35a
+  useEmailAsCamundaUserId: false
+  #useUsernameAsCamundaUserId: true
+  #useGroupPathAsCamundaGroupId: true
+  administratorGroupName: camunda-admin
+  administratorUserName: cadmin
+  #administratorUserId: a8f5f246-3300-45c8-ac58-ef1a746b6402
+  disableSSLCertificateValidation: true
