@@ -59,18 +59,19 @@ public List<WorkflowTask> getTasks() {
 		try {
 			Client client = getOauthClient();
 			System.out.println("------------------------ claimTask " );
-			WebTarget target = client.target("http://localhost:9090").path("/api/v1/forms/action").queryParam("actionId", "CLAIM_TASK").queryParam("taskId", task.getId());
+			WebTarget target = client.target("http://localhost:9090").path("/api/v1/forms/camunda/tasks/"+ task.getId() + "/claim");
+//			WebTarget target = client.target("http://localhost:9090").path("/api/v1/forms/action").queryParam("actionId", "CLAIM_TASK").queryParam("taskId", task.getId());
 			Invocation.Builder invocationBuilder  = target.request();
-			String emptyXml = "<root/>";
+//			String emptyXml = "<root/>";
 			String taskIdReq = task.getId();
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = null;
-			 builder = factory.newDocumentBuilder();
-			Document doc =builder.parse(new InputSource(new StringReader(emptyXml)));
+//			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//			DocumentBuilder builder = null;
+//			 builder = factory.newDocumentBuilder();
+//			Document doc =builder.parse(new InputSource(new StringReader(emptyXml)));
 			
 		    System.out.println(" ---------------------- " + target.toString() + " -------------- "  );
 //		    String resp = invocationBuilder.post(Entity.entity(doc, MediaType.APPLICATION_XML), String.class);
-		    String resp = invocationBuilder.post(Entity.xml(emptyXml), String.class);
+		    String resp = invocationBuilder.get(String.class);
 		    System.out.println(" ---------------------- " + target.toString() + " -------------- " + resp.toString() );
 		    task = getTask(taskIdReq);
 		}
@@ -79,6 +80,56 @@ public List<WorkflowTask> getTasks() {
 		}
 		return task;
 	}
+	
+	
+	public WorkflowTask completeTask(WorkflowTask task) {
+		try {
+			Client client = getOauthClient();
+			System.out.println("------------------------ completeTask " );
+			WebTarget target = client.target("http://localhost:9090").path("/api/v1/forms/camunda/tasks/"+ task.getId() + "/complete");
+			Invocation.Builder invocationBuilder  = target.request();
+//			String emptyXml = "<root/>";
+			String taskIdReq = task.getId();
+//			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//			DocumentBuilder builder = null;
+//			builder = factory.newDocumentBuilder();
+//			Document doc =builder.parse(new InputSource(new StringReader(emptyXml)));
+//			
+		    System.out.println(" ---------------------- " + target.toString() + " -------------- "  );
+		    String resp = invocationBuilder.get( String.class);
+		    System.out.println(" ---------------------- " + target.toString() + " -------------- " + resp.toString() );
+		    task = getTask(taskIdReq);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return task;
+	}
+	
+	public WorkflowTask revertTaskToUser(WorkflowTask task){
+		try {
+			Client client = getOauthClient();
+			System.out.println("------------------------ revertTaskToUser " );
+			WebTarget target = client.target("http://localhost:9090").path("/api/v1/forms/camunda/process/" + task.getProcessInstanceId() + "/update");
+			Invocation.Builder invocationBuilder  = target.request();
+//			String emptyXml = "<root/>";
+			String taskIdReq = task.getId();
+//			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//			DocumentBuilder builder = null;
+//			builder = factory.newDocumentBuilder();
+//			Document doc =builder.parse(new InputSource(new StringReader(emptyXml)));
+			
+		    System.out.println(" ---------------------- " + target.toString() + " -------------- "  );
+		    String resp = invocationBuilder.get( String.class);
+		    System.out.println(" ---------------------- " + target.toString() + " -------------- " + resp.toString() );
+		    task = getTask(taskIdReq);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return task;
+	}
+	
 	
 	/**
 	 * Get a task by Id

@@ -31,6 +31,28 @@ public class WorkflowTask implements Serializable {
     private String formKey;
     private String tenantId;
     
+    private String status;
+    private String orbeonUrl;
+    private String orbeonDocumentId;
+    
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getOrbeonUrl() {
+		return orbeonUrl;
+	}
+	public void setOrbeonUrl(String orbeonUrl) {
+		this.orbeonUrl = orbeonUrl;
+	}
+	public String getOrbeonDocumentId() {
+		return orbeonDocumentId;
+	}
+	public void setOrbeonDocumentId(String orbeonDocumentId) {
+		this.orbeonDocumentId = orbeonDocumentId;
+	}
 	public String getAssignee() {
 		return assignee;
 	}

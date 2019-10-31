@@ -19,7 +19,7 @@ public class ViewTasks {
   
   public WorkflowTask getSelectedTask() {
 	System.out.println(" ------------ Get selected task.");
-	if(this.selectedTask != null)
+	if(this.selectedTask != null && (this.selectedTask.getStatus() != null || this.selectedTask.getStatus() != ""))
 		 this.selectedTask = taskService.getTask(selectedTask.getId());
 	return selectedTask;
 }
@@ -42,6 +42,28 @@ private TaskService taskService = null;
 		 this.tasks = taskService.getTasks();
 	  return tasks;
 	  
+	  
   }
+  
+  public void claimTask() {
+		 TaskService taskService =  new TaskServiceImpl();
+		 if(this.selectedTask != null)
+			 this.selectedTask = taskService.claimTask(this.selectedTask);
+		 
+	}
+  
+  public void completeTask() {
+	  TaskService taskService =  new TaskServiceImpl();
+	  if(this.selectedTask != null)
+		this.selectedTask = taskService.completeTask(this.selectedTask);
+  }
+  
+  public void revertTaskToUser() {
+	  TaskService taskService =  new TaskServiceImpl();
+	  if(this.selectedTask != null)
+		this.selectedTask = taskService.revertTaskToUser(this.selectedTask);
+  }
+  
+  
 
 }

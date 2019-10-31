@@ -22,8 +22,29 @@ public class CamundaTaskResp {
 	 private String suspended;
 	 private String formKey;
 	 private String tenantId;
+	 private String status;
+	 private String orbeonUrl;
+	 private String orbeonDocumentId;
 	 
 	 
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getOrbeonUrl() {
+		return orbeonUrl;
+	}
+	public void setOrbeonUrl(String orbeonUrl) {
+		this.orbeonUrl = orbeonUrl;
+	}
+	public String getOrbeonDocumentId() {
+		return orbeonDocumentId;
+	}
+	public void setOrbeonDocumentId(String orbeonDocumentId) {
+		this.orbeonDocumentId = orbeonDocumentId;
+	}
 	public String getId() {
 		return id;
 	}
@@ -154,7 +175,9 @@ public class CamundaTaskResp {
 	@Override
 	public String toString() {
 		return String.format(
-				"Task [id=%s, name=%s, assignee=%s, created=%s, due=%s, followUp=%s, delegationState=%s, description=%s, executionId=%s, owner=%s, parentTaskId=%s, priority=%s, processDefinitionId=%s, processInstanceId=%s, taskDefinitionKey=%s, caseExecutionId=%s, caseInstanceId=%s, caseDefinitionId=%s, suspended=%s, formKey=%s, tenantId=%s]",
-				id,name,assignee,created,due,followUp,delegationState,description,executionId,owner,parentTaskId,priority,processDefinitionId,processInstanceId,taskDefinitionKey,caseExecutionId,caseInstanceId,caseDefinitionId,suspended,formKey,tenantId);
+				"Task [status=%s, orbeonUrl=%s, orbeonDocumentId=%s, id=%s, name=%s, assignee=%s, created=%s, due=%s, followUp=%s, delegationState=%s, description=%s, executionId=%s, owner=%s, parentTaskId=%s, priority=%s, processDefinitionId=%s, processInstanceId=%s, taskDefinitionKey=%s, caseExecutionId=%s, caseInstanceId=%s, caseDefinitionId=%s, suspended=%s, formKey=%s, tenantId=%s]",
+				status,orbeonUrl, orbeonDocumentId, id,name,assignee,created,due,followUp,delegationState,description,executionId,owner,parentTaskId,priority,processDefinitionId,processInstanceId,taskDefinitionKey,caseExecutionId,caseInstanceId,caseDefinitionId,suspended,formKey,tenantId);
 	}
+
+	 
 }

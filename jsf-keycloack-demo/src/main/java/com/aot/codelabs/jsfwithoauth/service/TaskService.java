@@ -16,5 +16,11 @@ public interface TaskService {
 	
 	boolean deleteTask(String taskId);
 	
+	WorkflowTask claimTask(WorkflowTask task);
+	
+	WorkflowTask completeTask(WorkflowTask task);
+	
+	WorkflowTask revertTaskToUser(WorkflowTask task);
+	
 
 }

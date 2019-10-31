@@ -80,17 +80,23 @@ public class CamundaServices {
 	public CamundaTaskResp getTasks(String taskId) {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-    	JSONObject taskJsonObject = new JSONObject();
+    	JSONObject variableJsonObject = new JSONObject();
     	CamundaTaskResp taskResponse = null ;
+    	String documentValue =null;
     	configureRestTemplate();
     	{
 			try {
 	    		
-				HttpEntity<String> request = new HttpEntity<String>(taskJsonObject.toString(),headers);
 				taskResponse = oAuth2RestTemplate.getForObject(CAMUNDA_BASE_URL + "/task/" + taskId , CamundaTaskResp.class);
-//		    	if(taskResponse.length > 0)
-//		    		camundaTaskReq = ArrayUtils.addAll(camundaTaskReq,taskResponse);
-		    	
+				
+				// Get Orbeon document ID from the variables of corresponding process instance,
+				String processInstanceId = taskResponse.getProcessInstanceId();
+				variableJsonObject = new JSONObject(oAuth2RestTemplate.getForObject(CAMUNDA_BASE_URL + "/process-instance/" + processInstanceId + "/variables", String.class));
+				documentValue = variableJsonObject.getJSONObject("document").getString("value");
+				taskResponse.setOrbeonDocumentId(documentValue);
+				OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(processInstanceId);
+				taskResponse.setStatus(omd.getStatus());
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -143,7 +149,7 @@ public class CamundaServices {
     		
     		response  = oAuth2RestTemplate.getForEntity(claimTaskUrl.replace("/claim", ""), String.class);
     		JSONObject json = new JSONObject(response.getBody());
-    		processInstanceId = (String) json.get("executionId");
+    		processInstanceId = (String) json.get("processInstanceId");
     		OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(processInstanceId);
 	    	omd.setStatus("IN-PROGRESS");
 	    	orbeonMetaDataRepository.save(omd);
@@ -155,6 +161,42 @@ public class CamundaServices {
     	catch(Exception e) {
     		e.printStackTrace();
     		return "Exception during claim task. Please reach out to support team.";
+    	}
+    	
+    	return "OK";
+    	
+    }
+    
+    public String completeTasks(String taskId, String user) {
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	JSONObject taskJsonObject = new JSONObject();
+    	String claimTaskUrl ;
+    	String processInstanceId;
+    	configureRestTemplate();
+    	try {
+    		taskJsonObject.put("userId", user);
+    		HttpEntity<String> request = new HttpEntity<String>(taskJsonObject.toString(),headers);
+    		if(taskId != null && taskId != "" && user != null && user != "")
+    			claimTaskUrl = CAMUNDA_BASE_URL + "/task/" + taskId + "/complete";
+    		else 
+    			return "Task Id or User can't be empty. Check TaskId or authentication.";
+    		ResponseEntity<String> response  = oAuth2RestTemplate.postForEntity(claimTaskUrl, request, String.class);
+    		
+//    		response  = oAuth2RestTemplate.getForEntity(claimTaskUrl.replace("/claim", ""), String.class);
+//    		JSONObject json = new JSONObject(response.getBody());
+//    		processInstanceId = (String) json.get("processInstanceId");
+//    		OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(processInstanceId);
+//	    	omd.setStatus("IN-PROGRESS");
+//	    	orbeonMetaDataRepository.save(omd);
+//    		System.out.println("dummy");
+    	}
+    	catch(RestTemplateException rte) {
+    		return rte.getError();
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    		return "Exception during task completion. Please reach out to support team.";
     	}
     	
     	return "OK";

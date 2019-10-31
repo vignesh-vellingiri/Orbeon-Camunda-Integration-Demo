@@ -44,24 +44,34 @@
 					   </p:column>
 						<p:column>
 							<f:facet name="header">Assigned To</f:facet>
-					      #{task.owner}
+					      #{task.assignee}
 					   </p:column>
 
 						<p:column>
 							<f:facet name="header">Description</f:facet>
 					      #{task.description}
 					   </p:column>
-
 						<p:column>
+							<f:facet name="header">Status</f:facet>
+					      #{viewTasks.selectedTask.status}
+					   </p:column>
+						<!-- <p:column>
 							<h:link value="Claim" outcome="tasks/edit">
 								<f:param name="id" value="#{task.id}" />
 							</h:link>
+						</p:column> -->
+						<p:column>
+							<f:facet name="header">Claim</f:facet>
+							<h:commandButton action="#{viewTasks.claimTask()}" value="Claim">
+							  <!--   <f:setPropertyActionListener target="#{usermanager.doctorId}" value="#{doc.doctorId}" /> -->
+							</h:commandButton>
 						</p:column>
-						<!-- <p:column>
-							<h:link value="View" outcome="tasks/edit">
-								<f:param name="id" value="#{task.id}" />
-							</h:link>
-						</p:column>-->
+						<p:column>
+							<f:facet name="header">Ask Additonal Info</f:facet>
+							<h:commandButton action="#{viewTasks.revertTaskToUser()}" value="Ask Additonal Info">
+							  <!--   <f:setPropertyActionListener target="#{usermanager.doctorId}" value="#{doc.doctorId}" /> -->
+							</h:commandButton>
+						</p:column>
 					</p:dataTable>
 				</td>
 			</tr>
@@ -127,6 +137,16 @@
 								<td style="width: 20%;">#{viewTasks.selectedTask.caseDefinitionId}</td>
 								<td style="width: 10%;">Suspended:</td>
 								<td style="width: 30%;">#{viewTasks.selectedTask.suspended}</td>
+							</tr>
+							<tr>
+								<td style="width: 10%;">Orbeon Url:</td>
+								<td style="width: 20%;">#{viewTasks.selectedTask.orbeonUrl}</td>
+								<td style="width: 10%;">status:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.status}</td>
+							</tr>
+							<tr>
+								<td style="width: 10%;">Orbeon DocumentId:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.orbeonDocumentId}</td>
 							</tr>
 						</table>
 					</p:outputPanel></td>

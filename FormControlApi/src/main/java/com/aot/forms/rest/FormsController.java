@@ -102,17 +102,18 @@ public class FormsController {
        
     }
 	
-	@GetMapping(path = "/camunda/tasks/claim" , produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyAuthority('ROLE_role0')")
-    public CamundaTaskResp[] claimCamundaTasks() {
-		CamundaTaskResp[] resp = null;
+	@PreAuthorize("hasAnyAuthority('ROLE_role0')")
+	@RequestMapping(path = "/camunda/process/{processInstanceId}/update" , produces = MediaType.APPLICATION_JSON_VALUE)
+    public CamundaTaskResp updateStatus(@PathVariable("processInstanceId") String processInstanceId) {
+		CamundaTaskResp resp = null;
 		HttpHeaders headers = new HttpHeaders();
 	    headers.add("Content-Type", "application/json");  
 	    
     	try {
-    		
-    		List<String> groupList = securityContextUtils.getGroups();
-    		resp = camundaServices.getTasks(groupList, securityContextUtils.getUserName());
+    		OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(processInstanceId);
+    		omd.setStatus("REQ_INFO");
+    		orbeonMetaDataRepository.save(omd);
+    		//resp = camundaServices.getTasks(processInstanceId);
     	}
     	catch(Exception e) {
     		e.printStackTrace();
@@ -121,7 +122,55 @@ public class FormsController {
     	if(resp != null) 
     		return resp;
         else 
-        	return new CamundaTaskResp[0];
+        	return new CamundaTaskResp();
+       
+    }
+	
+	@GetMapping(path = "/camunda/tasks/{taskId}/claim" , produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ROLE_role0')")
+    public ResponseEntity<String> claimCamundaTasks(@PathVariable("taskId") String taskId) {
+		CamundaTaskResp[] resp = null;
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Content-Type", "application/json");  
+	    
+    	try {
+    		
+			LOGGER.debug("Claim request for taskId : " + taskId + " and user : " + securityContextUtils.getUserName());
+			String result =  camundaServices.claimTasks(taskId ,securityContextUtils.getUserName());
+			if(!result.equals("OK")) {
+				LOGGER.debug("Claim request Not Successful for taskId : " + taskId + " and user : " + securityContextUtils.getUserName());
+				return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+         
+        return new ResponseEntity<>("CLAIM OK", HttpStatus.OK);
+       
+    }
+	
+	@GetMapping(path = "/camunda/tasks/{taskId}/complete" , produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyAuthority('ROLE_role0')")
+    public ResponseEntity<String> completeCamundaTasks(@PathVariable("taskId") String taskId) {
+		CamundaTaskResp[] resp = null;
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Content-Type", "application/json");  
+	    
+    	try {
+    		
+			LOGGER.debug("Task Completion request for taskId : " + taskId + " and user : " + securityContextUtils.getUserName());
+			String result =  camundaServices.completeTasks(taskId ,securityContextUtils.getUserName());
+			if(!result.equals("OK")) {
+				LOGGER.debug("Task Completion request Not Successful for taskId : " + taskId + " and user : " + securityContextUtils.getUserName());
+				return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+         
+        return new ResponseEntity<>("CLAIM OK", HttpStatus.OK);
        
     }
 
