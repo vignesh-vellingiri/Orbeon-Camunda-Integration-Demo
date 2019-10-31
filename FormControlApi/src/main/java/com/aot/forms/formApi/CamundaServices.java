@@ -75,14 +75,37 @@ public class CamundaServices {
 	public void setTimeout(int timeout) {
 		this.timeout = timeout;
 	}
-
-
-	public CamundaTaskResp[] getTasks(List<String> groups) {
+	
+	// Get task matching the task Id
+	public CamundaTaskResp getTasks(String taskId) {
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_JSON);
+    	JSONObject taskJsonObject = new JSONObject();
+    	CamundaTaskResp taskResponse = null ;
+    	configureRestTemplate();
+    	{
+			try {
+	    		
+				HttpEntity<String> request = new HttpEntity<String>(taskJsonObject.toString(),headers);
+				taskResponse = oAuth2RestTemplate.getForObject(CAMUNDA_BASE_URL + "/task/" + taskId , CamundaTaskResp.class);
+//		    	if(taskResponse.length > 0)
+//		    		camundaTaskReq = ArrayUtils.addAll(camundaTaskReq,taskResponse);
+		    	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+    	return taskResponse;
+    }
+	
+	// Get task for the given group
+	public CamundaTaskResp[] getTasks(List<String> groups, String userName) {
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
     	JSONObject taskJsonObject = new JSONObject();
     	CamundaTaskResp[] taskResponse ;
     	configureRestTemplate();
+    	camundaTaskReq = new CamundaTaskResp[0];
     	for (String group : groups) {
 			try {
 	    		taskJsonObject.put("candidateGroup", group.replaceAll("/", ""));
@@ -95,6 +118,10 @@ public class CamundaServices {
 				e.printStackTrace();
 			}
 		}
+    	taskResponse = oAuth2RestTemplate.getForObject(CAMUNDA_BASE_URL + "/task?assignee=" + userName, CamundaTaskResp[].class);
+    	if(taskResponse.length > 0)
+    		camundaTaskReq = ArrayUtils.addAll(camundaTaskReq,taskResponse);
+    	
     	return camundaTaskReq;
     }
     

@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +65,9 @@ public class FormsController {
     	try {
     		
     		List<String> groupList = securityContextUtils.getGroups();
-    		resp = camundaServices.getTasks(groupList);
+    		resp = camundaServices.getTasks(groupList, securityContextUtils.getUserName());
+    		LOGGER.debug("List tasks returned " + resp.length + " tasks for user " + securityContextUtils.getUserName());
+    		
     	}
     	catch(Exception e) {
     		e.printStackTrace();
@@ -74,6 +77,28 @@ public class FormsController {
     		return resp;
         else 
         	return new CamundaTaskResp[0];
+       
+    }
+	
+	@PreAuthorize("hasAnyAuthority('ROLE_role0')")
+	@RequestMapping(path = "/camunda/tasks/{taskId}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    public CamundaTaskResp getCamundaTaskDetails(@PathVariable("taskId") String taskId) {
+		CamundaTaskResp resp = null;
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Content-Type", "application/json");  
+	    
+    	try {
+    		
+    		resp = camundaServices.getTasks(taskId);
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	
+    	if(resp != null) 
+    		return resp;
+        else 
+        	return new CamundaTaskResp();
        
     }
 	
@@ -87,7 +112,7 @@ public class FormsController {
     	try {
     		
     		List<String> groupList = securityContextUtils.getGroups();
-    		resp = camundaServices.getTasks(groupList);
+    		resp = camundaServices.getTasks(groupList, securityContextUtils.getUserName());
     	}
     	catch(Exception e) {
     		e.printStackTrace();

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Edit Task</title>
+	<h:outputStylesheet library = "css" name = "styles.css"  />
+</h:head>
+<h:body>
+
+
+    <f:viewParam name="id" value="#{updateTask.task}" 
+        converter="#{taskConverter}" converterMessage="Unknown task, please use a link from within the system."
+        required="true" requiredMessage="Bad request, please use a link from within the system."
+    />
+</f:metadata>
+<h:form rendered="#{not empty updateTask.task}">
+
+    <h:inputText value="#{updateTask.task.id}" /><br/>
+    <h:inputText value="#{updateTask.task.name}" /><br/>
+    <h:inputText value="#{updateTask.task.created}" /><br/>
+    <h:inputText value="#{updateTask.task.due}" /><br/>
+
+</h:form>
+</h:body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Task Portal</title>
+	<h:outputStylesheet library = "css" name = "styles.css"  />
+</h:head>
+<h:body>
+<h:form id="form">
+    <!-- <p:dialog
+      widgetVar="taskDialog" modal="true">
+      <p:outputPanel id="taskDetail">
+        <p:panelGrid
+          columns="2"
+          rendered="#{not empty viewTasks.selectedTask}"
+          columnClasses="column,column">
+          <h:outputText value="Task Id: #{viewTasks.selectedTask.id}" />
+          <h:outputText value="Name: #{viewTasks.selectedTask.name}" />
+        </p:panelGrid>
+       </p:outputPanel>
+      </p:dialog> -->
+	<h:dataTable 
+	   var = "task"
+	   value = "#{viewTasks.tasks}"
+	   selection="#{viewTasks.selectedTask}"
+	   selectionMode="single"
+	   rowKey="#{task.id}"
+	   styleClass = "taskTable"
+       headerClass = "taskTableHeader"
+       rowClasses = "taskTableOddRow,taskTableEvenRow"
+       columnClasses="column,column,column,column,column">
+   
+   <!--  <h:column>    				
+      <f:facet name = "header">Task Id</f:facet>    				
+      #{task.id}
+   </h:column> -->
+   
+   <h:column>
+      <f:facet name = "header">Name</f:facet>
+      #{task.name}
+   </h:column>
+   <h:column>
+      <f:facet name = "header">Created Date</f:facet>
+      #{task.created}
+   </h:column>
+   <h:column>
+      <f:facet name = "header">Due Date</f:facet>
+      #{task.due}
+   </h:column>
+   <h:column>
+      <f:facet name = "header">Assigned To</f:facet>
+      #{task.owner}
+   </h:column>
+   <!-- <h:column>
+      <f:facet name = "header">Delegation State</f:facet>
+      #{task.delegationState}
+   </h:column> -->
+    <h:column>
+      <f:facet name = "header">Description</f:facet>
+      #{task.description}
+   </h:column>
+    <!-- <h:column>
+      <f:facet name = "header">Execution Id</f:facet>
+      #{task.executionId}
+   </h:column>-->
+   <h:column>
+        <h:link value="Edit" outcome="tasks/edit">
+            <f:param name="id" value="#{task.id}" />
+        </h:link>
+    </h:column>
+    <h:column>
+        <h:link value="View" outcome="tasks/edit">
+            <f:param name="id" value="#{task.id}" />
+        </h:link>
+    </h:column>
+</h:dataTable>
+
+</h:form>
+</h:body>
+</html>

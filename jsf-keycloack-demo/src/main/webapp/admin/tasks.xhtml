@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Task Portal</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+</h:head>
+<h:body>
+	<h:form id="taskForm">
+
+		<table>
+			<tr>
+				<td style="width: 100%; border: solid 1px gray;">
+				<!-- styleClass="taskTable"
+						headerClass="taskTableHeader"
+						rowClasses="taskTableOddRow,taskTableEvenRow"
+						columnClasses="column,column,column,column,column"-->
+				<p:dataTable
+						var="task" 
+						value="#{viewTasks.tasks}"
+						selection="#{viewTasks.selectedTask}" 
+						selectionMode="single"
+						rowKey="#{task.id}" 
+						scrollable="true" scrollHeight="400">
+
+						<p:ajax event="rowSelect" update="taskForm:detailsPanel" />
+
+
+						<p:column>
+							<f:facet name="header">Name</f:facet>
+					      #{task.name}
+					   </p:column>
+						<p:column>
+							<f:facet name="header">Created Date</f:facet>
+					      #{task.created}
+					   </p:column>
+						<p:column>
+							<f:facet name="header">Due Date</f:facet>
+					      #{task.due}
+					   </p:column>
+						<p:column>
+							<f:facet name="header">Assigned To</f:facet>
+					      #{task.owner}
+					   </p:column>
+
+						<p:column>
+							<f:facet name="header">Description</f:facet>
+					      #{task.description}
+					   </p:column>
+
+						<p:column>
+							<h:link value="Claim" outcome="tasks/edit">
+								<f:param name="id" value="#{task.id}" />
+							</h:link>
+						</p:column>
+						<!-- <p:column>
+							<h:link value="View" outcome="tasks/edit">
+								<f:param name="id" value="#{task.id}" />
+							</h:link>
+						</p:column>-->
+					</p:dataTable>
+				</td>
+			</tr>
+			<tr>
+				<td style="padding: 25px;"><p:outputPanel id="detailsPanel"
+						style="display:block">
+						<h3>Task Details:</h3>
+						<table>
+							<tr>
+							    <td style="width: 10%;">Task Id:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.id}</td>
+								<td style="width: 10%;">Name:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.name}</td>
+							</tr>
+							<tr>
+							
+								<td style="width: 10%;">Assignee:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.assignee}</td>
+								<td style="width: 10%;">Due Date:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.due}</td>
+							</tr>
+							<tr>
+							
+								<td style="width: 10%;">Follow Up:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.followUp}</td>
+								<td style="width: 10%;">Delegation State:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.delegationState}</td>
+								
+							</tr>
+							<tr>
+								<td style="width: 10%;">Description:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.description}</td>
+								<td style="width: 10%;">Execution Id:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.executionId}</td>
+								
+							</tr>
+							<tr>
+								<td style="width: 10%;">Owner:</td>
+								<td style="width: 20%;">#{viewTasks.selectedTask.owner}</td>
+								<td style="width: 10%;">Parent Task Id:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.parentTaskId}</td>
+							</tr>
+							<tr>
+								<td style="width: 10%;">Priority:</td>
+								<td style="width: 20%;">#{viewTasks.selectedTask.priority}</td>
+								<td style="width: 10%;">Process Definition Id:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.processDefinitionId}</td>
+							</tr>
+							<tr>
+								<td style="width: 10%;">Process Instance Id:</td>
+								<td style="width: 20%;">#{viewTasks.selectedTask.processInstanceId}</td>
+								<td style="width: 10%;">Task Definition Key:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.taskDefinitionKey}</td>
+							</tr>
+							<tr>
+								<td style="width: 10%;">Case Execution Id:</td>
+								<td style="width: 20%;">#{viewTasks.selectedTask.caseExecutionId}</td>
+								<td style="width: 10%;">Case Instance Id:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.caseInstanceId}</td>
+							</tr>
+							<tr>
+								<td style="width: 10%;">Case Definition Id:</td>
+								<td style="width: 20%;">#{viewTasks.selectedTask.caseDefinitionId}</td>
+								<td style="width: 10%;">Suspended:</td>
+								<td style="width: 30%;">#{viewTasks.selectedTask.suspended}</td>
+							</tr>
+						</table>
+					</p:outputPanel></td>
+			</tr>
+		</table>
+	</h:form>
+</h:body>
+</html>

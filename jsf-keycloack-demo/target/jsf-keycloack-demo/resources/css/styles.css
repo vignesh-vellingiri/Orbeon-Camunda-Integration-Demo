@@ -1,0 +1,27 @@
+.taskTable {   
+   border-collapse:collapse;
+   border:1px solid #000000;
+   width: 100%;
+}
+
+.taskTableHeader {
+   text-align:center;
+   background:none repeat scroll 0 0 #B5B5B5;
+   border-bottom:1px solid #000000;
+   border-right:1px solid #000000;  
+   padding:2px;
+}
+
+.taskTableOddRow {
+   text-align:center;
+   background:none repeat scroll 0 0 #FFFFFFF;	
+}
+
+.taskTableEvenRow {
+   text-align:center;
+   background:none repeat scroll 0 0 #D3D3D3;
+}
+
+.column{
+	 border-right:1px solid #000000;
+}

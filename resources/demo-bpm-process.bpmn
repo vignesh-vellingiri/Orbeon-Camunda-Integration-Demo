@@ -10,6 +10,9 @@
           <camunda:formField id="Comments_id" label="Comments" type="string" />
           <camunda:formField id="Status_2bfbafg" label="Status" type="string" />
         </camunda:formData>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="obrbeonId">ddd</camunda:inputParameter>
+        </camunda:inputOutput>
       </extensionElements>
       <incoming>sequenceFlow_bb5ab465-91cb-48b2-bf42-c1d8324935d6</incoming>
       <outgoing>sequenceFlow_775949c1-c07f-4e5a-a050-ab8c5c18fea0</outgoing>

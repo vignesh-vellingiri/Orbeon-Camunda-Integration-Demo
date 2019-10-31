@@ -1,0 +1,6 @@
+com\aot\codelabs\jsfwithoauth\beans\UpdateTask.class
+com\aot\codelabs\jsfwithoauth\service\TaskServiceImpl.class
+com\aot\codelabs\jsfwithoauth\model\WorkflowTask.class
+com\aot\codelabs\jsfwithoauth\beans\TaskConverter.class
+com\aot\codelabs\jsfwithoauth\beans\ViewTasks.class
+com\aot\codelabs\jsfwithoauth\service\TaskService.class
