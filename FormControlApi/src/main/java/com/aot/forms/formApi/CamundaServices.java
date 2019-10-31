@@ -128,7 +128,12 @@ public class CamundaServices {
     	if(taskResponse.length > 0)
     		camundaTaskReq = ArrayUtils.addAll(camundaTaskReq,taskResponse);
     	
-    	return camundaTaskReq;
+    	int index = 0;
+    	for(CamundaTaskResp ctr : camundaTaskReq) {
+    		OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(ctr.getProcessInstanceId());
+    		camundaTaskReq[index++].setStatus(omd.getStatus());
+    	}
+    	return camundaTaskReq ;
     }
     
     public String claimTasks(String taskId, String user) {

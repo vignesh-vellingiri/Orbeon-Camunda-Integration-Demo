@@ -12,7 +12,7 @@
 <h:body>
 	<h:form id="taskForm">
 
-		<table>
+		<table id="outTable">
 			<tr>
 				<td style="width: 100%; border: solid 1px gray;">
 				<!-- styleClass="taskTable"
@@ -20,6 +20,7 @@
 						rowClasses="taskTableOddRow,taskTableEvenRow"
 						columnClasses="column,column,column,column,column"-->
 				<p:dataTable
+						id="taskTable"
 						var="task" 
 						value="#{viewTasks.tasks}"
 						selection="#{viewTasks.selectedTask}" 
@@ -53,7 +54,7 @@
 					   </p:column>
 						<p:column>
 							<f:facet name="header">Status</f:facet>
-					      #{viewTasks.selectedTask.status}
+					      #{task.status}
 					   </p:column>
 						<!-- <p:column>
 							<h:link value="Claim" outcome="tasks/edit">
@@ -62,15 +63,18 @@
 						</p:column> -->
 						<p:column>
 							<f:facet name="header">Claim</f:facet>
-							<h:commandButton action="#{viewTasks.claimTask()}" value="Claim">
-							  <!--   <f:setPropertyActionListener target="#{usermanager.doctorId}" value="#{doc.doctorId}" /> -->
-							</h:commandButton>
+							<p:commandButton update="taskForm:taskTable" action="#{viewTasks.claimTask()}" value="Claim">
+							</p:commandButton>
 						</p:column>
 						<p:column>
-							<f:facet name="header">Ask Additonal Info</f:facet>
-							<h:commandButton action="#{viewTasks.revertTaskToUser()}" value="Ask Additonal Info">
-							  <!--   <f:setPropertyActionListener target="#{usermanager.doctorId}" value="#{doc.doctorId}" /> -->
-							</h:commandButton>
+							<f:facet name="header">Complete</f:facet>
+							<p:commandButton onclick="return confirm('Are you sure?');"   update="taskForm:taskTable" action="#{viewTasks.completeTask()}" value="Complete">
+							</p:commandButton>
+						</p:column>
+						<p:column>
+							<f:facet name="header">Revert</f:facet>
+							<p:commandButton update="taskForm:taskTable"  action="#{viewTasks.revertTaskToUser()}" value="Revert">
+							</p:commandButton>
 						</p:column>
 					</p:dataTable>
 				</td>
@@ -140,7 +144,8 @@
 							</tr>
 							<tr>
 								<td style="width: 10%;">Orbeon Url:</td>
-								<td style="width: 20%;">#{viewTasks.selectedTask.orbeonUrl}</td>
+								<td> <a href="#{viewTasks.getOrbeonUrl(viewTasks.selectedTask.orbeonDocumentId, viewTasks.selectedTask.status)}" target="_blank">Orbeon Form Link</a> </td>
+								<!-- <td style="width: 20%;">#{viewTasks.getOrbeonUrl(viewTasks.selectedTask.orbeonDocumentId, viewTasks.selectedTask.status)}</td> -->
 								<td style="width: 10%;">status:</td>
 								<td style="width: 30%;">#{viewTasks.selectedTask.status}</td>
 							</tr>

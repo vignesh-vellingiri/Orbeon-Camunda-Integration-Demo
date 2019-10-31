@@ -64,6 +64,20 @@ private TaskService taskService = null;
 		this.selectedTask = taskService.revertTaskToUser(this.selectedTask);
   }
   
+  public String getOrbeonUrl(String documentId, String status) {
+	  String url = "http://localhost:8080/orbeon/fr/test/testForm/";
+	  if(status.equals("REQ_INFO"))
+		  url = url + "view";
+	  else if(status.equals("NEW"))
+		  url = url + "view";
+	  else if(status.equals("IN-PROGRESS"))
+		  url = url + "edit";
+	  url = url + "/" + documentId;
+	  if (documentId == null || documentId == "")
+		  return "";
+	  return url;
+  }
+  
   
 
 }
