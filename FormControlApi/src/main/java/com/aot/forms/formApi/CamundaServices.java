@@ -122,6 +122,8 @@ public class CamundaServices {
 		    	
 			} catch (JSONException e) {
 				e.printStackTrace();
+			}catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
     	taskResponse = oAuth2RestTemplate.getForObject(CAMUNDA_BASE_URL + "/task?assignee=" + userName, CamundaTaskResp[].class);
@@ -131,8 +133,10 @@ public class CamundaServices {
     	int index = 0;
     	for(CamundaTaskResp ctr : camundaTaskReq) {
     		OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(ctr.getProcessInstanceId());
-    		camundaTaskReq[index++].setStatus(omd.getStatus());
+    		if (omd != null)
+    			camundaTaskReq[index++].setStatus(omd.getStatus());
     	}
+    	System.out.println("---------------- Resp from get task");
     	return camundaTaskReq ;
     }
     

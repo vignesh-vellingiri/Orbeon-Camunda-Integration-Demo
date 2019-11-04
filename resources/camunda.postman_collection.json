@@ -1,0 +1,404 @@
+{
+	"info": {
+		"_postman_id": "c64622d6-0ae1-4b82-960f-88d65168af91",
+		"name": "camunda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/engine-rest/deployment/create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "deployment-name",
+							"value": "myAutoDeploy",
+							"type": "text"
+						},
+						{
+							"key": "enable-duplicate-filtering",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "deployment-source",
+							"value": "process application",
+							"type": "text"
+						},
+						{
+							"key": "data",
+							"type": "file",
+							"src": "/C:/Code/camunda-fluent-builder/bpmn-model-1.bpmn"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/engine-rest/deployment/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"engine-rest",
+						"deployment",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "process-definition_start",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"variables\" : {\n\t\t\"taskGroup\" : {\n\t\t\t\"value\":\"myGroup\"\n\t\t},\n\t\t\"taskGroup3\" : {\n\t\t\t\"value\":\"test data\"\n\t\t}\n\t}\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9092/camunda/engine-rest/process-definition/key/process_e26648e3-7e0e-4917-abba-72533f5ebf61/start",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"camunda",
+						"engine-rest",
+						"process-definition",
+						"key",
+						"process_e26648e3-7e0e-4917-abba-72533f5ebf61",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query task",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4RDNOc1VxSElIdjByemJwNzB0M0V6Q3V0SXB2RDdBclJEdVBzUjBDTGE0In0.eyJqdGkiOiI1MGIwN2U3Ni1hNzIzLTQ5YjgtYjcxMi00NTVhOTdjZGNmMTQiLCJleHAiOjE1NzIwMjYyNzMsIm5iZiI6MCwiaWF0IjoxNTcyMDI1OTczLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo5MDAxL2F1dGgvcmVhbG1zL29yYmVvblJlYWxtIiwiYXVkIjpbInNwcmluZyIsImNhbXVuZGFBcGkiLCJhY2NvdW50Il0sInN1YiI6ImQwOGZhMGVlLWVhYmMtNGM1My1iNDcxLTlhYjEyNWJkMDFjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InNwcmluZ19jbGllbnQiLCJhdXRoX3RpbWUiOjE1NzIwMTk4MDAsInNlc3Npb25fc3RhdGUiOiJiYzVkODdhMC1kZjM0LTRiMzMtYjNlMi02NDk0ZWZlYmQwOWMiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicm9sZTAiLCJjYWRtaW4tcm9sZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJzcHJpbmciOnsicm9sZXMiOlsicm9sZTAiLCJ1c2VyIl19LCJjYW11bmRhQXBpIjp7InJvbGVzIjpbImNhbXVuZGEtcmVzdC1hcGktYWRtaW4tY3JvbGUiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwidXNlcl9uYW1lIjoiZ2xvYmFsIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2xvYmFsIiwiZ3JvdXAiOlsiL2NhbXVuZGEtYWRtaW4iLCIvY2FtdW5kYS1yZXN0LWFwaSIsIi90ZXN0LWdyb3VwIl19.jIrdxN0w-xAliu9QBF2OZpPSsqTLoEoTUizlUKZUj3SgK6H2O4zOsRhXC9-p5dqouIhziaodMkZJKu2eiWAuv7JH7-GDitp6g-muHEfHXpa8BmEHodytJI82jmO4t0JpLnfhrIIwm9_c-jmXmyBFBa2IJ9BPnu68x2yU7FVQ7dGAvLhS0PlxKkEWB35sWGEKG5CSwJ0PuMlI6AWbuRG1Ce2_MMAKErwST1gKvSkQMmCjmZa0XbUMTDKziV3vlhTgiM_JeLK0B7rwysAdiBf8N3MnBtktPETUA3VtcApE2QhQg6COyFIDVHGl3ihYSVUfr_cjK6YuJ6m2qogW60AzsA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"candidateGroup\":\"testGroup\"\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9092/camunda/engine-rest/task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"camunda",
+						"engine-rest",
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query task Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4RDNOc1VxSElIdjByemJwNzB0M0V6Q3V0SXB2RDdBclJEdVBzUjBDTGE0In0.eyJqdGkiOiI1MGIwN2U3Ni1hNzIzLTQ5YjgtYjcxMi00NTVhOTdjZGNmMTQiLCJleHAiOjE1NzIwMjYyNzMsIm5iZiI6MCwiaWF0IjoxNTcyMDI1OTczLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo5MDAxL2F1dGgvcmVhbG1zL29yYmVvblJlYWxtIiwiYXVkIjpbInNwcmluZyIsImNhbXVuZGFBcGkiLCJhY2NvdW50Il0sInN1YiI6ImQwOGZhMGVlLWVhYmMtNGM1My1iNDcxLTlhYjEyNWJkMDFjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InNwcmluZ19jbGllbnQiLCJhdXRoX3RpbWUiOjE1NzIwMTk4MDAsInNlc3Npb25fc3RhdGUiOiJiYzVkODdhMC1kZjM0LTRiMzMtYjNlMi02NDk0ZWZlYmQwOWMiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicm9sZTAiLCJjYWRtaW4tcm9sZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJzcHJpbmciOnsicm9sZXMiOlsicm9sZTAiLCJ1c2VyIl19LCJjYW11bmRhQXBpIjp7InJvbGVzIjpbImNhbXVuZGEtcmVzdC1hcGktYWRtaW4tY3JvbGUiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwidXNlcl9uYW1lIjoiZ2xvYmFsIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2xvYmFsIiwiZ3JvdXAiOlsiL2NhbXVuZGEtYWRtaW4iLCIvY2FtdW5kYS1yZXN0LWFwaSIsIi90ZXN0LWdyb3VwIl19.jIrdxN0w-xAliu9QBF2OZpPSsqTLoEoTUizlUKZUj3SgK6H2O4zOsRhXC9-p5dqouIhziaodMkZJKu2eiWAuv7JH7-GDitp6g-muHEfHXpa8BmEHodytJI82jmO4t0JpLnfhrIIwm9_c-jmXmyBFBa2IJ9BPnu68x2yU7FVQ7dGAvLhS0PlxKkEWB35sWGEKG5CSwJ0PuMlI6AWbuRG1Ce2_MMAKErwST1gKvSkQMmCjmZa0XbUMTDKziV3vlhTgiM_JeLK0B7rwysAdiBf8N3MnBtktPETUA3VtcApE2QhQg6COyFIDVHGl3ihYSVUfr_cjK6YuJ6m2qogW60AzsA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"candidateGroup\":\"testGroup\"\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9092/camunda/engine-rest/task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"camunda",
+						"engine-rest",
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "process-definition",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4RDNOc1VxSElIdjByemJwNzB0M0V6Q3V0SXB2RDdBclJEdVBzUjBDTGE0In0.eyJqdGkiOiI1ZjA1ZGViNC0wMmNhLTQ4M2YtYWQzMS1iNDkyY2YyOTAwZDUiLCJleHAiOjE1NzIwMjc0NTQsIm5iZiI6MCwiaWF0IjoxNTcyMDI3MTU0LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo5MDAxL2F1dGgvcmVhbG1zL29yYmVvblJlYWxtIiwiYXVkIjpbInNwcmluZyIsImNhbXVuZGFBcGkiLCJhY2NvdW50Il0sInN1YiI6ImQwOGZhMGVlLWVhYmMtNGM1My1iNDcxLTlhYjEyNWJkMDFjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InNwcmluZ19jbGllbnQiLCJhdXRoX3RpbWUiOjE1NzIwMTk4MDAsInNlc3Npb25fc3RhdGUiOiJiYzVkODdhMC1kZjM0LTRiMzMtYjNlMi02NDk0ZWZlYmQwOWMiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicm9sZTAiLCJjYWRtaW4tcm9sZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJzcHJpbmciOnsicm9sZXMiOlsicm9sZTAiLCJ1c2VyIl19LCJjYW11bmRhQXBpIjp7InJvbGVzIjpbImNhbXVuZGEtcmVzdC1hcGktYWRtaW4tY3JvbGUiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwidXNlcl9uYW1lIjoiZ2xvYmFsIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2xvYmFsIiwiZ3JvdXAiOlsiL2NhbXVuZGEtYWRtaW4iLCIvY2FtdW5kYS1yZXN0LWFwaSIsIi90ZXN0LWdyb3VwIl19.crdFJs9--j-EY6gTazqwJfPNgy-ZiameOfC9nge_ZRIEH-IFtGgUXImm880R-BfWD2dwUyCiiMI0FtEBPcMAoo2sNGNVPXm_qXb2krBszdZpxqOZMXyal1YS0Dn6N7ztxyRTD0S9wXjRq9d0y1p6Cqchs75Xg_Zla8lSWHRWKf1oIRxiNpMYtdmG6ZJquHjknq7BcDVS3UPyMfkR2ZmDmyYalmmBv44QhKnVqqya46dhZbxj1FU3afo1NZ21OzHdNs2Vah5QK2Nd4BJjIiI3dgoTIGWw76jq3lR4ksJYikUtvJSKHWcuSIikdo_ncLInx4qv0vxwJ5LrCSEna9usHA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"candidateGroup\":\"testGroup\"\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9092/camunda/engine-rest/process-definition",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"camunda",
+						"engine-rest",
+						"process-definition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Claim",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4RDNOc1VxSElIdjByemJwNzB0M0V6Q3V0SXB2RDdBclJEdVBzUjBDTGE0In0.eyJqdGkiOiJkZTcwMGQ5My0zOTlmLTQ3MzUtYTc4Yy0xYmQ0MDk2YzRlYjYiLCJleHAiOjE1NzIzNzE1OTIsIm5iZiI6MCwiaWF0IjoxNTcyMzcxMjkyLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo5MDAxL2F1dGgvcmVhbG1zL29yYmVvblJlYWxtIiwiYXVkIjpbInNwcmluZyIsImNhbXVuZGFBcGkiLCJhY2NvdW50Il0sInN1YiI6ImQwOGZhMGVlLWVhYmMtNGM1My1iNDcxLTlhYjEyNWJkMDFjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InNwcmluZ19jbGllbnQiLCJhdXRoX3RpbWUiOjE1NzIzNzAzMjQsInNlc3Npb25fc3RhdGUiOiJjYmJlMmYxMS0zYTMxLTQ1MmEtODQzZS0xMTA1OTVjZTFlMTQiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicm9sZTAiLCJjYWRtaW4tcm9sZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJzcHJpbmciOnsicm9sZXMiOlsicm9sZTAiLCJ1c2VyIl19LCJjYW11bmRhQXBpIjp7InJvbGVzIjpbImNhbXVuZGEtcmVzdC1hcGktYWRtaW4tY3JvbGUiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwidXNlcl9uYW1lIjoiZ2xvYmFsIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2xvYmFsIiwiZ3JvdXAiOlsiL2NhbXVuZGEtYWRtaW4iLCIvY2FtdW5kYS1yZXN0LWFwaSIsIi90ZXN0LWdyb3VwIl19.GeqAlNaqemMqERU0kFr4Gggli7cNHHVvq-MNLZFgyw010oldMvfNQobe-rxrUcfqenuNo7ra4iTyyCubUvvNpkZ1lfDtiFD6Mr5BMte3GKWTXiPwa2szt5osrq7sEzxUCWrDqhCmMDULX7l5GdYouT6L5eaXTziedOZTqfbnnJpmBi_jqni9oB1cRPZhze1fQReb2zi1_u176x3a7-WKFitQTsisM9RAbZ7WhkwW4S2OOdzlSX4XODoAcPVitKLA7o6xPrjwuZmDPgCUoRaDsD6ke6qB4hwrO0JZovAMrX4AgOojmnXeYmjNwQ04JtXyBEwyaAdJUW70VfnGk8H3rA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\":\"testid\"\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9092/camunda/engine-rest/task/04e3ed61-fa73-11e9-b242-3cf0114a5415/claim",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"camunda",
+						"engine-rest",
+						"task",
+						"04e3ed61-fa73-11e9-b242-3cf0114a5415",
+						"claim"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "process-instance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4RDNOc1VxSElIdjByemJwNzB0M0V6Q3V0SXB2RDdBclJEdVBzUjBDTGE0In0.eyJqdGkiOiJmMmE0NWI0Mi02YjM2LTRjNDQtODAxYS0zYjgwNGFmMzRiOTEiLCJleHAiOjE1NzIwNDQ1NjcsIm5iZiI6MCwiaWF0IjoxNTcyMDQ0MjY3LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo5MDAxL2F1dGgvcmVhbG1zL29yYmVvblJlYWxtIiwiYXVkIjpbInNwcmluZyIsImNhbXVuZGFBcGkiLCJhY2NvdW50Il0sInN1YiI6ImQwOGZhMGVlLWVhYmMtNGM1My1iNDcxLTlhYjEyNWJkMDFjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InNwcmluZ19jbGllbnQiLCJhdXRoX3RpbWUiOjE1NzIwNDM5MDEsInNlc3Npb25fc3RhdGUiOiI2YmYxMTlmNS00ZDMxLTQ3NzYtOWI3ZC00NWE4MDdhNTE0ODQiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicm9sZTAiLCJjYWRtaW4tcm9sZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJzcHJpbmciOnsicm9sZXMiOlsicm9sZTAiLCJ1c2VyIl19LCJjYW11bmRhQXBpIjp7InJvbGVzIjpbImNhbXVuZGEtcmVzdC1hcGktYWRtaW4tY3JvbGUiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwidXNlcl9uYW1lIjoiZ2xvYmFsIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2xvYmFsIiwiZ3JvdXAiOlsiL2NhbXVuZGEtYWRtaW4iLCIvY2FtdW5kYS1yZXN0LWFwaSIsIi90ZXN0LWdyb3VwIl19.WMhFyV23dgMBQuKBgAhpyYJ63BzMXL2fLysawol17ULwaUNFA1OKVrYRa1t3IEVibxjLsdtOylROm5_xdco10QwLUHEO3Iw0B-ThQvi5ts2sOf5GetDDydDe34VEZ1mM7abkAD-4j4QqCsI8iYhvxhs8D9bSZkL7YzKuFM3hgKu3jHpQePcH77-BOcT34ezirxJkorep2UarFrrJ21TZGW8k7JB-TGJkvRGFQ8073ViLCY9NiR-3FuFvnh-lXPF5m-0-nqeiRx9yFpI3KAjWZPvFi94n0zC8g51P4L46QWxgzwuHlw6lYw1RxYF2UYghYKGGynnd94BzPdjitCq5ig",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"variables\" : {\n\t\t\"taskGroup\" : {\n\t\t\t\"value\":\"test-group13\"\n\t\t},\n\t\t\"taskGroup3\" : {\n\t\t\t\"value\":\"test data\"\n\t\t}\n\t}\n\t\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9092/camunda/engine-rest/process-instance/8aecdba0-f77a-11e9-a69c-3cf0114a5415/variables",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"camunda",
+						"engine-rest",
+						"process-instance",
+						"8aecdba0-f77a-11e9-a69c-3cf0114a5415",
+						"variables"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

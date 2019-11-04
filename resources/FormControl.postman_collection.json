@@ -1,0 +1,417 @@
+{
+	"info": {
+		"_postman_id": "937f8c0e-8f0a-4fe1-958e-9ec85abfa3be",
+		"name": "FormControl",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "healthCheck",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/v1/forms/healthCheck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"forms",
+						"healthCheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "action=SAVE_METADATA",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<root></root>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1/forms/action?document=docname_1&app=app_1&docid=123&actionId=SAVE_METADATA",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"forms",
+						"action"
+					],
+					"query": [
+						{
+							"key": "document",
+							"value": "docname_1"
+						},
+						{
+							"key": "app",
+							"value": "app_1"
+						},
+						{
+							"key": "docid",
+							"value": "123"
+						},
+						{
+							"key": "actionId",
+							"value": "SAVE_METADATA"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "action=CLAIM_TASK",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<root></root>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1/forms/action?actionId=CLAIM_TASK",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"forms",
+						"action"
+					],
+					"query": [
+						{
+							"key": "document",
+							"value": "docname_1",
+							"disabled": true
+						},
+						{
+							"key": "app",
+							"value": "app_1",
+							"disabled": true
+						},
+						{
+							"key": "docid",
+							"value": "123",
+							"disabled": true
+						},
+						{
+							"key": "actionId",
+							"value": "CLAIM_TASK"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List tasks",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4RDNOc1VxSElIdjByemJwNzB0M0V6Q3V0SXB2RDdBclJEdVBzUjBDTGE0In0.eyJqdGkiOiI0MTVmYWEzZS0xYWRkLTQ0YTQtYmYwZi1iZDYxNjhmMjVkOWIiLCJleHAiOjE1NzIwMzE1MjIsIm5iZiI6MCwiaWF0IjoxNTcyMDMxMjIyLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo5MDAxL2F1dGgvcmVhbG1zL29yYmVvblJlYWxtIiwiYXVkIjpbInNwcmluZyIsImNhbXVuZGFBcGkiLCJhY2NvdW50Il0sInN1YiI6ImQwOGZhMGVlLWVhYmMtNGM1My1iNDcxLTlhYjEyNWJkMDFjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InNwcmluZ19jbGllbnQiLCJhdXRoX3RpbWUiOjE1NzIwMzEyMjIsInNlc3Npb25fc3RhdGUiOiI2YmYxMTlmNS00ZDMxLTQ3NzYtOWI3ZC00NWE4MDdhNTE0ODQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicm9sZTAiLCJjYWRtaW4tcm9sZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJzcHJpbmciOnsicm9sZXMiOlsicm9sZTAiLCJ1c2VyIl19LCJjYW11bmRhQXBpIjp7InJvbGVzIjpbImNhbXVuZGEtcmVzdC1hcGktYWRtaW4tY3JvbGUiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwidXNlcl9uYW1lIjoiZ2xvYmFsIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2xvYmFsIiwiZ3JvdXAiOlsiL2NhbXVuZGEtYWRtaW4iLCIvY2FtdW5kYS1yZXN0LWFwaSIsIi90ZXN0LWdyb3VwIl19.bBvmwJ7IIlyy1SgPPrHJFIbsUrGfCbBLngVa1KeLTWBYKVL8V_XnMwVhWGakWtM50r-EY8VRtatUSAkHjST0vAo9OpNBX44vF4rcu-8cP1ZDxt4s71ckDow4hy5Dr9Pp24C720epIre2ywmYU9fy5DDKArL_R15YdOM5k8JwT6Drx78UFZid705j2shRMaTcsQQRtYyTZ4MF3E5rfapSPysiwdHRm86bj7PA2ceCimSl74ORXTtToSFHGlxXPNasy9oZY4uCL1RubUtmlEaietSZpfeSk9CgqdZPVr3omOlVNqJedtcrEhPjIvuPVXidQ68rxBPXOV7X5Xv64d_7DA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/v1/forms/camunda/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"forms",
+						"camunda",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Claim tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4RDNOc1VxSElIdjByemJwNzB0M0V6Q3V0SXB2RDdBclJEdVBzUjBDTGE0In0.eyJqdGkiOiI5NWNmZTZjMi03MjIzLTRhMDAtYjEzOC1kMzUyYjYyZGVmNWUiLCJleHAiOjE1NzIwMzI1NjgsIm5iZiI6MCwiaWF0IjoxNTcyMDMyMjY4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo5MDAxL2F1dGgvcmVhbG1zL29yYmVvblJlYWxtIiwiYXVkIjpbInNwcmluZyIsImNhbXVuZGFBcGkiLCJhY2NvdW50Il0sInN1YiI6ImQwOGZhMGVlLWVhYmMtNGM1My1iNDcxLTlhYjEyNWJkMDFjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InNwcmluZ19jbGllbnQiLCJhdXRoX3RpbWUiOjE1NzIwMzEyMjIsInNlc3Npb25fc3RhdGUiOiI2YmYxMTlmNS00ZDMxLTQ3NzYtOWI3ZC00NWE4MDdhNTE0ODQiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicm9sZTAiLCJjYWRtaW4tcm9sZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJzcHJpbmciOnsicm9sZXMiOlsicm9sZTAiLCJ1c2VyIl19LCJjYW11bmRhQXBpIjp7InJvbGVzIjpbImNhbXVuZGEtcmVzdC1hcGktYWRtaW4tY3JvbGUiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwidXNlcl9uYW1lIjoiZ2xvYmFsIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2xvYmFsIiwiZ3JvdXAiOlsiL2NhbXVuZGEtYWRtaW4iLCIvY2FtdW5kYS1yZXN0LWFwaSIsIi90ZXN0LWdyb3VwIl19.W4A4caX4wWEembgR2wssEssSKJejkEqhFk01ImdXdnD8fOMbxLWSxN24Ljw_XYmQqQNQOdfgeQrH80nbnO5cLfyWjiULWQkw0nwutwYMtUFBwhDcXieUZAuCp3vxf7GsIrLIooCMoolCOgXeSFoZF7ktMSIdmaFrSDWZzbTnvok8pDAsYSgNgziLThIMD66gdZypT0uVWz2UqM5wHpBPqk0MWBv2PhjRambW7PsMmH9mraxiKzGlQ0_JxS1gkW2oO8tf6edRohv7O1H8wV06RKQ3k8Hbie4DkGhDHLrWDMogoJsaYYV2K_WlxsLAU7Xd1i16H9xwJvqRImYgF6nCSQ",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"userId\": \"aUserId\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1/forms/camunda/task/5ae48344-f5bd-11e9-8a15-3cf0114a5415/claim",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"forms",
+						"camunda",
+						"task",
+						"5ae48344-f5bd-11e9-8a15-3cf0114a5415",
+						"claim"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unsecure action=START_INSTANCE",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<FormControlAction>\n\t<variables>\n\t\t<variable>\n\t\t\t<key>taskGroup</key>\n\t\t\t<value>test-group</value>\n\t\t</variable>\n\t\t<variable>\n\t\t\t<key>test 1</key>\n\t\t\t<value>test 1 value</value>\n\t\t</variable>\n\t\t\t<variable>\n\t\t\t<key>test 2</key>\n\t\t\t<value>test 2 value</value>\n\t\t</variable>\n\t</variables>\n</FormControlAction>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/v1/forms/unsecure/action?document=docname_1&app=app_1&docid=123&actionId=START_INSTANCE&processDefinitionKey=process_e26648e3-7e0e-4917-abba-72533f5ebf61",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"forms",
+						"unsecure",
+						"action"
+					],
+					"query": [
+						{
+							"key": "document",
+							"value": "docname_1"
+						},
+						{
+							"key": "app",
+							"value": "app_1"
+						},
+						{
+							"key": "docid",
+							"value": "123"
+						},
+						{
+							"key": "actionId",
+							"value": "START_INSTANCE"
+						},
+						{
+							"key": "processDefinitionKey",
+							"value": "process_e26648e3-7e0e-4917-abba-72533f5ebf61"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tasks details",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4RDNOc1VxSElIdjByemJwNzB0M0V6Q3V0SXB2RDdBclJEdVBzUjBDTGE0In0.eyJqdGkiOiJmYjg2NjM4Yi02ZWE4LTQ3YzQtOWE0Ny1iMmYxNGQ5YTliZDIiLCJleHAiOjE1NzI0NzI5ODUsIm5iZiI6MCwiaWF0IjoxNTcyNDcyNjg1LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo5MDAxL2F1dGgvcmVhbG1zL29yYmVvblJlYWxtIiwiYXVkIjpbInNwcmluZyIsImNhbXVuZGFBcGkiLCJhY2NvdW50Il0sInN1YiI6ImQwOGZhMGVlLWVhYmMtNGM1My1iNDcxLTlhYjEyNWJkMDFjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InNwcmluZ19jbGllbnQiLCJhdXRoX3RpbWUiOjE1NzI0NzI2ODQsInNlc3Npb25fc3RhdGUiOiI5NTQ5Mzc3NC02ZGRlLTQ3ZWUtYWNiMS1mY2UzMGE1NjAwZjkiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicm9sZTAiLCJjYWRtaW4tcm9sZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJzcHJpbmciOnsicm9sZXMiOlsicm9sZTAiLCJ1c2VyIl19LCJjYW11bmRhQXBpIjp7InJvbGVzIjpbImNhbXVuZGEtcmVzdC1hcGktYWRtaW4tY3JvbGUiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwidXNlcl9uYW1lIjoiZ2xvYmFsIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2xvYmFsIiwiZ3JvdXAiOlsiL2NhbXVuZGEtYWRtaW4iLCIvY2FtdW5kYS1yZXN0LWFwaSIsIi90ZXN0LWdyb3VwIl19.FQPJF0lCbXI5Q0PSfZGNE-tfI2UbohQFDFneP9gfzvk5fNRmUXac7qar05kHQRZfmxbDpqEERGL_hBTEN0UWiLabMxqBnEOOx-cb2eFCI6f_phYLITPY-fVOvG9wRiMzuMC9GULxTmm4amtBpnIzB4C0XrrdW9otc0XxCmcfDq9apEzGVU1juxgL6EPP2K_HfQGf9eEU3wQ4rnAhD5OlTpdifPYdF0PHlIp6T_5Rdi6XCBfiIn6gGZ6J0r621CHxhZXbBMaEUjH2-I8ou4UMdT2uaC8Z0ShtD3exaaukxjvP6ynZUd5xN7l1aP5GOuAP5VV1zUKkxAA3FWsNIYplXQ",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://10.90.1.64:9090/api/v1/forms/camunda/tasks/024f7b1b-faa2-11e9-9dad-3cf0114a5415",
+					"protocol": "http",
+					"host": [
+						"10",
+						"90",
+						"1",
+						"64"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"forms",
+						"camunda",
+						"tasks",
+						"024f7b1b-faa2-11e9-9dad-3cf0114a5415"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Status",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4RDNOc1VxSElIdjByemJwNzB0M0V6Q3V0SXB2RDdBclJEdVBzUjBDTGE0In0.eyJqdGkiOiI3Yzg5ZDA0NS1jOWQ0LTQzNDMtYjhmNS0yYzczYTRmY2RlNGQiLCJleHAiOjE1NzI1NDE5OTcsIm5iZiI6MCwiaWF0IjoxNTcyNTQxNjk3LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo5MDAxL2F1dGgvcmVhbG1zL29yYmVvblJlYWxtIiwiYXVkIjpbInNwcmluZyIsImNhbXVuZGFBcGkiLCJhY2NvdW50Il0sInN1YiI6ImQwOGZhMGVlLWVhYmMtNGM1My1iNDcxLTlhYjEyNWJkMDFjNCIsInR5cCI6IkJlYXJlciIsImF6cCI6InNwcmluZ19jbGllbnQiLCJhdXRoX3RpbWUiOjE1NzI1NDE2OTYsInNlc3Npb25fc3RhdGUiOiJlNmI3YmY5My1mMGVhLTQ5NjktYmExZC1hMzBkNzg2OGE1M2UiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsicm9sZTAiLCJjYWRtaW4tcm9sZSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJzcHJpbmciOnsicm9sZXMiOlsicm9sZTAiLCJ1c2VyIl19LCJjYW11bmRhQXBpIjp7InJvbGVzIjpbImNhbXVuZGEtcmVzdC1hcGktYWRtaW4tY3JvbGUiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwidXNlcl9uYW1lIjoiZ2xvYmFsIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiZ2xvYmFsIiwiZ3JvdXAiOlsiL2NhbXVuZGEtYWRtaW4iLCIvY2FtdW5kYS1yZXN0LWFwaSIsIi90ZXN0LWdyb3VwIl19.W-FF4uUo1CS_35MjKCZwAnBV9HPD2uagM4td8CELQ2TVXiw0-Pj5iDwClmBebG2_LJ21xD3zfYAO4AiqHV1K95bEeYcVZHVB-e81d3K4h8RdTb5whAP6X5M7CCARxUa1DUiHW7UXS-xSQCYUkw-9GwaadiUfsuEGvoq9oTfSA_k1SMQuETI29Rv35tjcHGP3qVUpII2B_HaF6KoNQMMtDtPhwSgq8Sh_T4nx28wNJ68W7dZ-EWYMquhHqhHKhpXCQ_2xEx5dphnUWFI43DDhR2iGNc9H12g74Q1S2_56upcTfdWiYoCOop51a52n333bV_UTvtQrOvzdFDu7cw8FLA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/api/v1/forms/camunda/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"v1",
+						"forms",
+						"camunda",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

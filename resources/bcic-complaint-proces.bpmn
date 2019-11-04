@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="definitions_8345b791-d607-4c83-8996-8f95d8c188cf" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" exporter="Camunda Modeler" exporterVersion="3.3.5">
-  <process id="process_e26648e3-7e0e-4917-abba-72533f5ebf61" name="Right of Information" isExecutable="true">
-    <documentation>Right of Information</documentation>
+  <process id="process_bcic_e26648e3-7e0e-4917-abba-72533f5ebf61" name="BCIC Complaint" isExecutable="true">
+    <documentation>BCIC  Complaint Review</documentation>
     <startEvent id="startEvent_0de94cef-bb46-4296-a556-be457116859e">
       <outgoing>sequenceFlow_bb5ab465-91cb-48b2-bf42-c1d8324935d6</outgoing>
     </startEvent>
     <userTask id="assignApprover" name="Assign Approver" camunda:candidateGroups="${groupName}">
-      <documentation>Rights of Information Form Validation</documentation>
+      <documentation>BCIC Complaint Form Validation</documentation>
       <extensionElements>
         <camunda:formData>
           <camunda:formField id="Comments_id" label="Comments" type="string" />
@@ -43,18 +43,22 @@
         <di:waypoint x="246" y="118" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_4da43359-5f6c-4e40-9ed3-d6593ec5623a" bpmnElement="endEvent">
-        <dc:Bounds x="692" y="100" width="36" height="36" />
+        <dc:Bounds x="992" y="302" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_4ff58c88-b649-4747-8b85-826c83e9e3b7" bpmnElement="sequenceFlow_775949c1-c07f-4e5a-a050-ab8c5c18fea0">
-        <di:waypoint x="346" y="118" />
-        <di:waypoint x="480" y="118" />
+        <di:waypoint x="296" y="78" />
+        <di:waypoint x="296" y="60" />
+        <di:waypoint x="520" y="60" />
+        <di:waypoint x="520" y="100" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0ru0b9j_di" bpmnElement="SequenceFlow_0ru0b9j">
-        <di:waypoint x="580" y="118" />
-        <di:waypoint x="692" y="118" />
+        <di:waypoint x="600" y="140" />
+        <di:waypoint x="730" y="140" />
+        <di:waypoint x="730" y="320" />
+        <di:waypoint x="992" y="320" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_1r2kjdk_di" bpmnElement="Task_03j5y34">
-        <dc:Bounds x="480" y="78" width="100" height="80" />
+        <dc:Bounds x="500" y="100" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
