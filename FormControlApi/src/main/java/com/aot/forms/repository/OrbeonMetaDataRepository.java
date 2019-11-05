@@ -19,4 +19,7 @@ public interface  OrbeonMetaDataRepository extends JpaRepository <OrbeonMetaData
 	  
 	  @Query(value = "select u FROM OrbeonMetaData u WHERE u.documentid = ?1")
 	  OrbeonMetaData findByDocumentIdEquals(String documentId);
+	  
+	  @Query(value = "select u FROM OrbeonMetaData u WHERE u.username = ?1")
+	  OrbeonMetaData findByUserNameEquals(String userName);
 }

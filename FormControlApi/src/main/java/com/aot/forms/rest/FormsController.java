@@ -258,6 +258,7 @@ public class FormsController {
     	String processDefinitionKey = "" ;
     	String processInstanceId = "";
     	String userName = "" ;
+    	String status = "";
     	
     	LOGGER.debug("Query parameters received:");
     	for (Map.Entry<String,String> entry : reqParam.entrySet()) { 
@@ -266,6 +267,8 @@ public class FormsController {
     			varMap.put(entry.getKey(), entry.getValue());	
     		if(entry.getKey().matches("processInstanceId"))
     			processInstanceId = entry.getValue();	
+    		if(entry.getKey().matches("status"))
+    			status = entry.getValue();	
 
     	}
     	
@@ -312,7 +315,10 @@ public class FormsController {
     	else if(actionId.equals("END_INSTANCE")) {
     		try {
 				OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(processInstanceId);
-				omd.setStatus("COMPLETE");
+				if(status.matches("REJECTED"))
+					omd.setStatus("REJECTED");
+				else
+					omd.setStatus("COMPLETE");
 				orbeonMetaDataRepository.save(omd);
 				return new ResponseEntity<>("END_INSTANCE OK", HttpStatus.OK);
     		}

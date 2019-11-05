@@ -25,8 +25,8 @@ public class ExampleServiceTask implements JavaDelegate {
     // use camunda model API to get current BPMN element
     String processInstanceId = execution.getProcessInstanceId();
     try {
-
-		URL url = new URL("http://localhost:9090/api/v1/forms/unsecure/action?actionId=END_INSTANCE&processInstanceId=" + processInstanceId);
+    	String status = (String) execution.getVariable("Status");
+		URL url = new URL("http://localhost:9090/api/v1/forms/unsecure/action?actionId=END_INSTANCE&processInstanceId=" + processInstanceId +"&status=" + status);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setDoOutput(true);
 		conn.setRequestMethod("POST");
@@ -65,7 +65,6 @@ public class ExampleServiceTask implements JavaDelegate {
     
     // log status
     LOGGER.info("\n\n\nService Task is completed for " + execution.getProcessInstanceId() +"!\n\n\n");
-
   }
 
 }
