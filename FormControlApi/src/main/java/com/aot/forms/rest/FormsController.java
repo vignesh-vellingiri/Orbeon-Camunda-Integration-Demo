@@ -289,17 +289,38 @@ public class FormsController {
 		String actionId = reqParam.get("actionId");
 		
     	if(actionId.equals("START_INSTANCE")) {
-			OrbeonMetaData omd = new OrbeonMetaData(reqParam.get("document"),userName,"","","NEW","","","","");
-			orbeonMetaDataRepository.save(omd);
-			camundaServices.startProcessDefinition(varMap,processDefinitionKey,  omd  );
+    		try {
+    			OrbeonMetaData omdExisting = orbeonMetaDataRepository.findByDocumentIdEquals(reqParam.get("document"));
+    			if (omdExisting != null) {
+    				LOGGER.debug("Document Id is already avilable!");
+    				omdExisting.setStatus("IN-PROGRESS");
+    				orbeonMetaDataRepository.save(omdExisting);
+    			}
+    			else {
+    				OrbeonMetaData omd = new OrbeonMetaData(reqParam.get("document"),userName,"","","NEW","","","","");
+    				orbeonMetaDataRepository.save(omd);
+    				camundaServices.startProcessDefinition(varMap,processDefinitionKey,  omd  );
+    			}
+    		}
+    		catch(Exception e) {
+    			e.printStackTrace();
+    		}
+			
 			return new ResponseEntity<>("START_INSTANCE OK", HttpStatus.OK);
 			
 		}
     	else if(actionId.equals("END_INSTANCE")) {
-			OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(processInstanceId);
-			omd.setStatus("COMPLETE");
-			orbeonMetaDataRepository.save(omd);
-			return new ResponseEntity<>("END_INSTANCE OK", HttpStatus.OK);
+    		try {
+				OrbeonMetaData omd = orbeonMetaDataRepository.findByCamundaIdEquals(processInstanceId);
+				omd.setStatus("COMPLETE");
+				orbeonMetaDataRepository.save(omd);
+				return new ResponseEntity<>("END_INSTANCE OK", HttpStatus.OK);
+    		}
+    		catch(Exception e) {
+    			e.printStackTrace();
+    			return new ResponseEntity<>("END_INSTANCE ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+    		}
+			
 			
 		}
     	
