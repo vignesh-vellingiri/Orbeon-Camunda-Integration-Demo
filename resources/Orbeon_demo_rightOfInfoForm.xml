@@ -1,0 +1,176 @@
+<xh:html xmlns:xh="http://www.w3.org/1999/xhtml"
+         xmlns:xxf="http://orbeon.org/oxf/xml/xforms"
+         xmlns:xxi="http://orbeon.org/oxf/xml/xinclude"
+         xmlns:saxon="http://saxon.sf.net/"
+         xmlns:fr="http://orbeon.org/oxf/xml/form-runner"
+         xmlns:xf="http://www.w3.org/2002/xforms"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:sql="http://orbeon.org/oxf/xml/sql"
+         xmlns:ev="http://www.w3.org/2001/xml-events"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:exf="http://www.exforms.org/exf/1-0"
+         xmlns:array="http://www.w3.org/2005/xpath-functions/array"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         xmlns:fb="http://orbeon.org/oxf/xml/form-builder"
+         xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+         xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+         fr:data-format-version="4.0.0">
+    <xh:head>
+        <xh:title>Untitled Form</xh:title>
+        <xf:model id="fr-form-model" xxf:expose-xpath-types="true" xxf:analysis.calculate="true">
+
+            <!-- Main instance -->
+            <xf:instance id="fr-form-instance" xxf:exclude-result-prefixes="#all" xxf:index="id">
+                <form>
+                    <section-1>
+                        <control-1/>
+                        <control-2/>
+                        <control-4/>
+                        <control-3/>
+                        <userName/>
+                        <processDefinitionKey/>
+                        <groupName/>
+                    </section-1>
+                </form>
+            </xf:instance>
+
+            <!-- Bindings -->
+            <xf:bind id="fr-form-binds" ref="instance('fr-form-instance')">
+                <xf:bind id="section-1-bind" name="section-1" ref="section-1">
+                    <xf:bind id="control-1-bind" name="control-1" ref="control-1" xxf:whitespace="trim"/>
+                    <xf:bind id="control-2-bind" ref="control-2" name="control-2" xxf:whitespace="trim"/>
+                    <xf:bind id="userName-bind" ref="userName" name="userName" xxf:whitespace="trim"
+                             readonly="true()"
+                             xxf:default="xxf:username()"/>
+                    <xf:bind id="processDefinitionKey-bind" ref="processDefinitionKey"
+                             name="processDefinitionKey"
+                             xxf:whitespace="trim"
+                             readonly="true()"/>
+                    <xf:bind id="groupName-bind" ref="groupName" name="groupName" xxf:whitespace="trim"
+                             readonly="true()"/>
+                    <xf:bind id="control-4-bind" ref="control-4" name="control-4" xxf:whitespace="trim"/>
+                    <xf:bind id="control-3-bind" ref="control-3" name="control-3" xxf:whitespace="trim"/>
+                </xf:bind>
+            </xf:bind>
+
+            <!-- Metadata -->
+            <xf:instance id="fr-form-metadata" xxf:readonly="true" xxf:exclude-result-prefixes="#all">
+                <metadata>
+                    <application-name>demo</application-name>
+                    <form-name>rightOfInfoForm</form-name>
+                    <title xml:lang="en">Untitled Form</title>
+                    <description xml:lang="en"/>
+                    <created-with-version>2018.2.1.201902072242 CE</created-with-version>
+                    <updated-with-version>2018.2.1.201902072242 CE</updated-with-version>
+                </metadata>
+            </xf:instance>
+
+            <!-- Attachments -->
+            <xf:instance id="fr-form-attachments" xxf:exclude-result-prefixes="#all">
+                <attachments/>
+            </xf:instance>
+
+            <!-- All form resources -->
+            <xf:instance xxf:readonly="true" id="fr-form-resources" xxf:exclude-result-prefixes="#all">
+                <resources>
+                    <resource xml:lang="en">
+                        <section-1>
+                            <label>Untitled Section</label>
+                        </section-1>
+                        <control-1>
+                            <label>Name</label>
+                            <hint/>
+                            <alert/>
+                        </control-1>
+                        <control-2>
+                            <label>company</label>
+                            <hint/>
+                        </control-2>
+                        <control-4>
+                            <label>Comments</label>
+                            <hint/>
+                        </control-4>
+                        <control-3>
+                            <label>Test</label>
+                            <hint/>
+                        </control-3>
+                        <userName>
+                            <label>userName</label>
+                            <hint/>
+                        </userName>
+                        <processDefinitionKey>
+                            <label>processDefinitionKey</label>
+                            <hint/>
+                        </processDefinitionKey>
+                        <groupName>
+                            <label>groupName</label>
+                            <hint/>
+                        </groupName>
+                    </resource>
+                </resources>
+            </xf:instance>
+        </xf:model>
+    </xh:head>
+    <xh:body>
+        <fr:view>
+            <fr:body xmlns:p="http://www.orbeon.com/oxf/pipeline" xmlns:xbl="http://www.w3.org/ns/xbl"
+                     xmlns:oxf="http://www.orbeon.com/oxf/processors">
+                <fr:section id="section-1-section" bind="section-1-bind">
+                    <xf:label ref="$form-resources/section-1/label"/>
+                    <fr:grid id="grid-1-grid">
+                        <fr:c y="1" x="1" w="6">
+                            <xf:input id="control-1-control" bind="control-1-bind">
+                                <xf:label ref="$form-resources/control-1/label"/>
+                                <xf:hint ref="$form-resources/control-1/hint"/>
+                                <xf:alert ref="$fr-resources/detail/labels/alert"/>
+                            </xf:input>
+                        </fr:c>
+                        <fr:c y="1" x="7" w="6">
+                            <xf:input id="control-2-control" bind="control-2-bind">
+                                <xf:label ref="$form-resources/control-2/label"/>
+                                <xf:hint ref="$form-resources/control-2/hint"/>
+                                <xf:alert ref="$fr-resources/detail/labels/alert"/>
+                            </xf:input>
+                        </fr:c>
+                        <fr:c x="1" y="2" w="6">
+                            <xf:input id="control-4-control" bind="control-4-bind">
+                                <xf:label ref="$form-resources/control-4/label"/>
+                                <xf:hint ref="$form-resources/control-4/hint"/>
+                                <xf:alert ref="$fr-resources/detail/labels/alert"/>
+                            </xf:input>
+                        </fr:c>
+                        <fr:c x="7" y="2" w="6">
+                            <xf:input id="control-3-control" bind="control-3-bind">
+                                <xf:label ref="$form-resources/control-3/label"/>
+                                <xf:hint ref="$form-resources/control-3/hint"/>
+                                <xf:alert ref="$fr-resources/detail/labels/alert"/>
+                            </xf:input>
+                        </fr:c>
+                        <fr:c x="1" y="3" w="6">
+                            <xf:input id="userName-control" bind="userName-bind">
+                                <xf:label ref="$form-resources/userName/label"/>
+                                <xf:hint ref="$form-resources/userName/hint"/>
+                                <xf:alert ref="$fr-resources/detail/labels/alert"/>
+                            </xf:input>
+                        </fr:c>
+                        <fr:c x="7" y="3" w="6">
+                            <xf:input id="processDefinitionKey-control" bind="processDefinitionKey-bind">
+                                <xf:label ref="$form-resources/processDefinitionKey/label"/>
+                                <xf:hint ref="$form-resources/processDefinitionKey/hint"/>
+                                <xf:alert ref="$fr-resources/detail/labels/alert"/>
+                            </xf:input>
+                        </fr:c>
+                        <fr:c x="1" y="4" w="6">
+                            <xf:input id="groupName-control" bind="groupName-bind">
+                                <xf:label ref="$form-resources/groupName/label"/>
+                                <xf:hint ref="$form-resources/groupName/hint"/>
+                                <xf:alert ref="$fr-resources/detail/labels/alert"/>
+                            </xf:input>
+                        </fr:c>
+                        <fr:c x="7" y="4" w="6"/>
+                    </fr:grid>
+                </fr:section>
+            </fr:body>
+        </fr:view>
+    </xh:body>
+</xh:html>
